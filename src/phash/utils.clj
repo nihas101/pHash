@@ -10,8 +10,8 @@
 
 (defn bit->long
   ([] [0 1])
-  ([[hash _]] hash)
-  ([[hash exp] bit]
+  ([[^Long hash _]] hash)
+  ([[^Long hash ^Long exp] bit]
    [(+ hash (* bit exp)) (*' exp 2)]))
 
 (defn hamming-distance [bits-a bits-b]
@@ -43,37 +43,6 @@
 (def load-image im/load-image)
 (def resize im/resize)
 
-(defn hash-fn [core-fn]
-  (fn [image] (core-fn bit->long [0 1] image)))
-
-(defn hash-bits-fn
-  "Creates a perceptual hash function.
-   Faster than pHash and less prone to false positives than aHash.
-   
-   Returns the individual bits in a seq."
-  [core-fn]
-  (fn
-    ([image]
-     (core-fn conj [] image))
-    ([image debug-fn]
-     (core-fn conj [] image debug-fn))))
-
-; TODO: Use defmethod (or defprotocol) to dispatch on :a-hash, :d-hash etc for resize and pixels-brightness->hash-bits
-; TODO: When using defprotol you can keep the width and height there also
-(defn hash-core [pixels-brightness->hash-bits width height]
-  (fn
-    ([reducer init image]
-     (-> image
-         (resize ,,, width height)
-         grayscale
-         brightness-per-pixel
-         (pixels-brightness->hash-bits ,,, reducer init)))
-    ([reducer init image debug-fn]
-     (let [resized-image (resize image width height)
-           gray (grayscale resized-image)]
-       (debug-fn image)
-       (debug-fn resized-image)
-       (debug-fn gray)
-       (-> resized-image
-           brightness-per-pixel
-           (pixels-brightness->hash-bits ,,, reducer init))))))
+(defprotocol HashFn
+  "A hash function used to calculate a hash from a sequence of brightness values."
+  (pixels-brightness->hash-bits [this pxls-brightness] "Calculate a hash from a sequence of brightness values"))

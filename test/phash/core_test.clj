@@ -2,7 +2,21 @@
   (:require
    [clojure.test :refer :all]
    [phash.core :refer :all]
-   [phash.test-utils :as tu]))
+   [phash.a-hash :as a]
+   [phash.test-utils :as tu]
+   [clojure.string :as s]))
+
+(defonce ^:private a-hash-fn (a/a-hash))
+(defonce ^:private a-hash-bits-fn (a/a-hash conj []))
+
+(deftest perceptual-hash-test
+  (testing "a-hash test"
+    (is (= 18391610165931278335 (perceptual-hash a-hash-fn tu/test-image)))))
+
+(deftest perceptual-hash-bits-test
+  (testing "a-hash-bits test"
+    (is (= "1111111111111111110100111100001100000000000001000011110011111111"
+           (s/join (perceptual-hash a-hash-bits-fn tu/test-image))))))
 
 ;; aHash
 
