@@ -27,19 +27,25 @@
      (debug-fn gray)
      (u/image->hash-bits hash-fn gray))))
 
-(defn image-distance ^Long [^clojure.lang.Keyword method ^java.awt.Image image-a ^java.awt.Image image-b]
-  (let [hash-fn (cond ; TODO: Turn into multimethod and extract
-                  (= method :a-hash) (ah/a-hash conj [])
-                  (= method :d-hash) (dh/d-hash conj [])
-                  (= method :p-hash) (ph/p-hash conj [])
-                  :else nil)]
-    (u/hamming-distance
-     (perceptual-hash hash-fn image-a)
-     (perceptual-hash hash-fn image-b))))
+(defmulti hash-method identity)
+
+(defmethod hash-method :a-hash [_]
+  (ah/a-hash conj []))
+
+(defmethod hash-method :d-hash [_]
+  (dh/d-hash conj []))
+
+(defmethod hash-method :p-hash [_]
+  (ph/p-hash conj []))
+
+(defn image-distance ^Long [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b]
+  (u/hamming-distance
+   (perceptual-hash hash-fn image-a)
+   (perceptual-hash hash-fn image-b)))
 
 ; TODO: Add tests
-(defn eq-images? [^clojure.lang.Keyword method ^java.awt.Image image-a ^java.awt.Image image-b ^Long threshold]
-  (< (image-distance method image-a image-b) threshold))
+(defn eq-images? [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b ^Long threshold]
+  (< (image-distance hash-fn image-a image-b) threshold))
 
 (defn- debug-a [^String a ^String b]
   (d/gui!)

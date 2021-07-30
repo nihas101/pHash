@@ -50,7 +50,7 @@
   (testing "image-distance a-hash compr test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :a-hash image image))
+       (is (= 0 (image-distance (hash-method :a-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/compr)))
@@ -59,7 +59,7 @@
   (testing "image-distance a-hash blur test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :a-hash image image))
+       (is (= 0 (image-distance (hash-method :a-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/blur)))
@@ -68,7 +68,7 @@
   (testing "image-distance a-hash compr test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :a-hash image image))
+       (is (= 0 (image-distance (hash-method :a-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/misc)))
@@ -77,7 +77,7 @@
   (testing "image-distance a-hash rotd test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :a-hash image image))
+       (is (= 0 (image-distance (hash-method :a-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/rotd)))
@@ -86,7 +86,7 @@
   (testing "image-distance a-hash compr blur test"
     (mapv
      (fn [idx compressed blurred]
-       (is (< (image-distance :a-hash compressed blurred) 7)
+       (is (< (image-distance (hash-method :a-hash) compressed blurred) 7)
            (str "Image with id " idx " has a hamming distance larger than 7")))
      (range)
      tu/compr
@@ -96,7 +96,7 @@
   (testing "image-distance a-hash compr misc test"
     (mapv
      (fn [idx compressed misclns]
-       (is (< (image-distance :a-hash compressed misclns) 3)
+       (is (< (image-distance (hash-method :a-hash) compressed misclns) 3)
            (str "Image with id " idx " has a hamming distance larger than 3")))
      (range)
      tu/compr
@@ -117,7 +117,7 @@
   (testing "image-distance a-hash blur misc test"
     (mapv
      (fn [idx blurred misclns]
-       (is (< (image-distance :a-hash blurred misclns) 7)
+       (is (< (image-distance (hash-method :a-hash) blurred misclns) 7)
            (str "Image with id " idx " has a hamming distance larger than 7")))
      (range)
      tu/blur
@@ -128,7 +128,7 @@
 ;  (testing "image-distance a-hash blur rotd test"
 ;    (mapv
 ;     (fn [idx blurred rotated]
-;       (is (< (image-distance :a-hash blurred rotated) 1)
+;       (is (< (image-distance (hash-method :a-hash) blurred rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/blur
@@ -139,7 +139,7 @@
 ;  (testing "image-distance a-hash misc rotd test"
 ;    (mapv
 ;     (fn [idx misclns rotated]
-;       (is (< (image-distance :a-hash misclns rotated) 1)
+;       (is (< (image-distance (hash-method :a-hash) misclns rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/misc
@@ -152,7 +152,7 @@
   (testing "image-distance d-hash compr test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :d-hash image image))
+       (is (= 0 (image-distance (hash-method :d-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/compr)))
@@ -161,7 +161,7 @@
   (testing "image-distance d-hash blur test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :d-hash image image))
+       (is (= 0 (image-distance (hash-method :d-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/blur)))
@@ -170,7 +170,7 @@
   (testing "image-distance d-hash compr test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :d-hash image image))
+       (is (= 0 (image-distance (hash-method :d-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/misc)))
@@ -179,7 +179,7 @@
   (testing "image-distance d-hash rotd test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :d-hash image image))
+       (is (= 0 (image-distance (hash-method :d-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/rotd)))
@@ -188,7 +188,7 @@
   (testing "image-distance d-hash compr blur test"
     (mapv
      (fn [idx compressed blurred]
-       (is (< (image-distance :d-hash compressed blurred) 13)
+       (is (< (image-distance (hash-method :d-hash) compressed blurred) 13)
            (str "Image with id " idx " has a hamming distance larger than 13")))
      (range)
      tu/compr
@@ -198,7 +198,7 @@
   (testing "image-distance d-hash compr misc test"
     (mapv
      (fn [idx compressed misclns]
-       (is (< (image-distance :d-hash compressed misclns) 11)
+       (is (< (image-distance (hash-method :d-hash) compressed misclns) 11)
            (str "Image with id " idx " has a hamming distance larger than 11")))
      (range)
      tu/compr
@@ -209,7 +209,7 @@
 ;  (testing "image-distance d-hash compr rotd test"
 ;    (mapv
 ;     (fn [idx compressed rotated]
-;       (is (< (image-distance :d-hash compressed rotated) 1)
+;       (is (< (image-distance (hash-method :d-hash) compressed rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/compr
@@ -219,7 +219,7 @@
   (testing "image-distance d-hash blur misc test"
     (mapv
      (fn [idx blurred misclns]
-       (is (< (image-distance :d-hash blurred misclns) 10)
+       (is (< (image-distance (hash-method :d-hash) blurred misclns) 10)
            (str "Image with id " idx " has a hamming distance larger than 10")))
      (range)
      tu/blur
@@ -230,7 +230,7 @@
 ;  (testing "image-distance d-hash blur rotd test"
 ;    (mapv
 ;     (fn [idx blurred rotated]
-;       (is (< (image-distance :d-hash blurred rotated) 1)
+;       (is (< (image-distance (hash-method :d-hash) blurred rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/blur
@@ -241,7 +241,7 @@
 ;  (testing "image-distance d-hash misc rotd test"
 ;    (mapv
 ;     (fn [idx misclns rotated]
-;       (is (< (image-distance :d-hash misclns rotated) 1)
+;       (is (< (image-distance (hash-method :d-hash) misclns rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/misc
@@ -253,7 +253,7 @@
   (testing "image-distance p-hash compr test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :p-hash image image))
+       (is (= 0 (image-distance (hash-method :p-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/compr)))
@@ -262,7 +262,7 @@
   (testing "image-distance p-hash blur test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :p-hash image image))
+       (is (= 0 (image-distance (hash-method :p-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/blur)))
@@ -271,7 +271,7 @@
   (testing "image-distance p-hash compr test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :p-hash image image))
+       (is (= 0 (image-distance (hash-method :p-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/misc)))
@@ -280,7 +280,7 @@
   (testing "image-distance p-hash rotd test"
     (mapv
      (fn [idx image]
-       (is (= 0 (image-distance :p-hash image image))
+       (is (= 0 (image-distance (hash-method :p-hash) image image))
            (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
      (range)
      tu/rotd)))
@@ -289,7 +289,7 @@
   (testing "image-distance p-hash compr blur test"
     (mapv
      (fn [idx compressed blurred]
-       (is (< (image-distance :p-hash compressed blurred) 5)
+       (is (< (image-distance (hash-method :p-hash) compressed blurred) 5)
            (str "Image with id " idx " has a hamming distance larger than 5")))
      (range)
      tu/compr
@@ -299,7 +299,7 @@
   (testing "image-distance p-hash compr misc test"
     (mapv
      (fn [idx compressed misclns]
-       (is (< (image-distance :p-hash compressed misclns) 2)
+       (is (< (image-distance (hash-method :p-hash) compressed misclns) 2)
            (str "Image with id " idx " has a hamming distance larger than 2")))
      (range)
      tu/compr
@@ -310,7 +310,7 @@
 ;  (testing "image-distance p-hash compr rotd test"
 ;    (mapv
 ;     (fn [idx compressed rotated]
-;       (is (< (image-distance :p-hash compressed rotated) 1)
+;       (is (< (image-distance (hash-method :p-hash) compressed rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/compr
@@ -320,7 +320,7 @@
   (testing "image-distance p-hash blur misc test"
     (mapv
      (fn [idx blurred misclns]
-       (is (< (image-distance :p-hash blurred misclns) 5)
+       (is (< (image-distance (hash-method :p-hash) blurred misclns) 5)
            (str "Image with id " idx " has a hamming distance larger than 5")))
      (range)
      tu/blur
@@ -331,7 +331,7 @@
 ;  (testing "image-distance p-hash blur rotd test"
 ;    (mapv
 ;     (fn [idx blurred rotated]
-;       (is (< (image-distance :p-hash blurred rotated) 1)
+;       (is (< (image-distance (hash-method :p-hash) blurred rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/blur
@@ -342,7 +342,7 @@
 ;  (testing "image-distance p-hash misc rotd test"
 ;    (mapv
 ;     (fn [idx misclns rotated]
-;       (is (< (image-distance :p-hash misclns rotated) 1)
+;       (is (< (image-distance (hash-method :p-hash) misclns rotated) 1)
 ;           (str "Image with id " idx " has a hamming distance larger than 1")))
 ;     (range)
 ;     tu/misc
