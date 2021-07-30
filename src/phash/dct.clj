@@ -23,6 +23,8 @@
 
 (defonce ^:private scale-factor (/ 1 (Math/sqrt (* 2 32))))
 
+;; This is the slow version of the algorithm, first calculating all 32x32 transformations before discarding 75% of them
+
 (defn discret-cosine-transform-32x32
   "https://www.math.cuhk.edu.hk/~lmlui/dct.pdf"
   [values]
@@ -33,13 +35,28 @@
                (dct-sum-32x32 values i j))))
         (range 1024)))
 
-; TODO: Why calculate all these frequencies when we are just going to drop them?
-;       Just skip the parst outside of the first 8x8 block? (Copy these into a test and compare them via oracle)
 (defn reduce-dct-32x32->8x8 [values]
   (for [x (range 32)
         y (range 32)
         :when (and (< x 8) (< y 8))]
     (get values (u/idx-2d->idx-lin x y 32))))
+
+;; This is the fast version of the algorithm, only calculating the necessary transformations
+
+(defonce ^:private dct-indexes
+  (for [x (range 32)
+        y (range 32)
+        :when (and (< x 8) (< y 8))]
+    [x y]))
+
+(defn discret-cosine-transform-reduced-32x32
+  "https://www.math.cuhk.edu.hk/~lmlui/dct.pdf"
+  [values]
+  (mapv (fn [[i j]]
+          (* scale-factor
+             (coefficient i) (coefficient j)
+             (dct-sum-32x32 values i j)))
+        dct-indexes))
 
 ; TODO: Test if this works + Implement a function for fingerprint images
 ; https://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html

@@ -7,13 +7,15 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
 
+(defn- dct-32x32 [image]
+  (-> image
+      u/get-pixels
+      dct/discret-cosine-transform-reduced-32x32))
+
 (defrecord PHash [^Long width ^Long height reducer init]
   u/HashFn
   (image->hash-bits [_ image]
-    (let [dct (-> image
-                  u/get-pixels
-                  dct/discret-cosine-transform-32x32
-                  dct/reduce-dct-32x32->8x8)
+    (let [dct (dct-32x32 image)
           avg-dct (/ (reduce + dct) (count dct))]
       (transduce
        (map
