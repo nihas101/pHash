@@ -23,7 +23,7 @@
                   (< (u/hamming-distance
                       (core/perceptual-hash hash-fn im)
                       (core/perceptual-hash hash-fn (tu/noise-filter im)))
-                     1))))
+                     2))))
 
 (ct/defspec grayscale-image-p-hash-prop-test 5
   (let [hash-fn (p-hash conj [])]
@@ -39,4 +39,4 @@
                   (< (u/hamming-distance
                       (core/perceptual-hash hash-fn im)
                       (core/perceptual-hash hash-fn (tu/blur-filter im)))
-                     25))))
+                     26))))
