@@ -2,29 +2,41 @@
   (:require
    [clojure.test :refer :all]
    [phash.a-hash :refer :all]
-   [phash.utils :as u]))
+   [phash.utils :as u]
+   [phash.core :as core]
+   [phash.test-utils :as tu]
+   [clojure.test.check.clojure-test :as ct]
+   [clojure.test.check.properties :as prop]))
 
-(defonce ^:private a-hash-bits-fn (a-hash conj []))
+; Creates image between 5x5 and 20x20 (inclusive)
+(defonce ^:private image-generator (tu/image-gen 5 20))
 
-(deftest pixels-brightness->hash-bits-test
-  (testing (str "pixels-brightness->hash-bits of an empty image"
-                " should result in an \"empty\" hash.")
-    (is (= nil
-           (u/pixels-brightness->hash-bits a-hash-bits-fn [])))))
+(ct/defspec same-image-a-hash-prop-test 5
+  (let [hash-fn (a-hash)]
+    (prop/for-all [im image-generator]
+                  (= (core/perceptual-hash hash-fn im)
+                     (core/perceptual-hash hash-fn im)))))
 
-(deftest pixels-brightness->hash-bits-0-test
-  (testing "pixels-brightness->hash-bits of 0 should result in [0]."
-    (is (= [0]
-           (u/pixels-brightness->hash-bits a-hash-bits-fn [0])))))
+(ct/defspec noise-image-a-hash-prop-test 5
+  (let [hash-fn (a-hash conj [])]
+    (prop/for-all [im image-generator]
+                  (< (u/hamming-distance
+                      (core/perceptual-hash hash-fn im)
+                      (core/perceptual-hash hash-fn (tu/noise-filter im)))
+                     10))))
 
-(deftest pixels-brightness->hash-bits-1-test
-  (testing "pixels-brightness->hash-bits of 0 should result in [1]."
-    (is (= [0]
-           (u/pixels-brightness->hash-bits a-hash-bits-fn [1])))))
+(ct/defspec grayscale-image-a-hash-prop-test 5
+  (let [hash-fn (a-hash conj [])]
+    (prop/for-all [im image-generator]
+                  (< (u/hamming-distance
+                      (core/perceptual-hash hash-fn im)
+                      (core/perceptual-hash hash-fn (u/grayscale im)))
+                     50))))
 
-(deftest pixels-brightness->hash-bits-2-0-test
-  (testing "pixels-brightness->hash-bits of [2 0] should result in [0 1]."
-    (is (= [0 1]
-           (u/pixels-brightness->hash-bits a-hash-bits-fn [2 0])))))
-
-; TODO: Add property based tests (can make own images (and copy) with imagez!)
+(ct/defspec blur-image-a-hash-prop-test 5
+  (let [hash-fn (a-hash conj [])]
+    (prop/for-all [im image-generator]
+                  (< (u/hamming-distance
+                      (core/perceptual-hash hash-fn im)
+                      (core/perceptual-hash hash-fn (tu/blur-filter im)))
+                     50))))

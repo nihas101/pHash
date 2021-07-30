@@ -5,6 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [seesaw/seesaw "1.5.0"]
-                 [net.mikera/imagez "0.12.0"]]
+                 [net.mikera/imagez "0.12.0"]
+                 [org.clojure/test.check "1.1.0"]]
   :main phash.core ; TODO: Remove this will be a library => no main!
   :repl-options {:init-ns phash.core})

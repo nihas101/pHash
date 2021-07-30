@@ -35,6 +35,8 @@
 
 (def add-text-to-display! add-node-to-display!)
 
+(def show im/show)
+
 (defn gui! []
   (sc/native!)
   (let [a (sc/horizontal-panel)

@@ -1,6 +1,39 @@
 (ns phash.test-utils
   (:require
-   [phash.utils :as u]))
+   [mikera.image.filters :as filt]
+   [mikera.image.core :as im]
+   [phash.utils :as u]
+   [clojure.test.check.generators :as gen]))
+
+; TODO: Remove after done
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* true)
+
+(defonce blur-filter (filt/blur))
+(defonce noise-filter (filt/noise))
+
+(defn- blank-image-gen [min-size max-size]
+  (gen/fmap (fn [[w h]] (u/new-image w h))
+            (gen/tuple (gen/choose min-size max-size)
+                       (gen/choose min-size max-size))))
+
+(defn- color+image-gen [min-size max-size]
+  (gen/bind (blank-image-gen min-size max-size)
+            (fn [blank-image]
+              (gen/tuple (gen/return blank-image)
+                         (gen/vector (gen/choose 1 Long/MAX_VALUE)
+                                     (count (u/get-pixels blank-image)))))))
+
+; TODO: Create a gen that changes an image slightly (some pixels)
+
+(defn image-gen [min-size max-size]
+  (gen/fmap (fn [[image colors]]
+              (let [pixels ^ints (u/get-pixels image)]
+                (doseq [[idx color] (mapv vector (range) colors)]
+                  (aset pixels ^long idx ^long color))
+                (im/set-pixels image pixels))
+              image)
+            (color+image-gen min-size max-size)))
 
 (defonce ^:private compr-path-prefix "test/phash/test_images/compr/")
 (defonce ^:private blur-path-prefix "test/phash/test_images/blur/")
