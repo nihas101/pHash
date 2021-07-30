@@ -24,8 +24,9 @@
              ^java.awt.image.BufferedImage scaled-image)))
 
 (defn- add-node-to-display! [id node]
-  (swap! panels (fn [panels]
-                  (update panels id (fn [panel] (sc/config! panel :items (concat (sc/config panel :items) [node])))))))
+  (sc/invoke-later
+   (swap! panels (fn [panels]
+                   (update panels id (fn [panel] (sc/config! panel :items (concat (sc/config panel :items) [node]))))))))
 
 (defn add-image-to-display! [id image]
   (let [icon (sc/label :icon
