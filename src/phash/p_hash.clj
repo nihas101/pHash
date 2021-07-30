@@ -31,4 +31,3 @@
   ([] (p-hash u/bit->long [0 1]))
   ([reducer init] (p-hash width height reducer init))
   ([^Long width ^Long height reducer init] (PHash. width height reducer init)))
-

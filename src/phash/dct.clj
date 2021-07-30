@@ -25,15 +25,20 @@
 
 ;; This is the slow version of the algorithm, first calculating all 32x32 transformations before discarding 75% of them
 
-(defn discret-cosine-transform-32x32
+(defn discret-cosine-transform-32x32-fn
   "https://www.math.cuhk.edu.hk/~lmlui/dct.pdf"
-  [values]
-  (mapv (fn [lin-idx]
-          (let [[i j] (u/idx-in->idx-2d lin-idx 32)]
+  [dct-indexes]
+  (fn [values]
+    (mapv (fn [[i j]]
             (* scale-factor
                (coefficient i) (coefficient j)
-               (dct-sum-32x32 values i j))))
-        (range 1024)))
+               (dct-sum-32x32 values i j)))
+          dct-indexes)))
+
+(defonce ^:private dct-indexes (mapv #(u/idx-in->idx-2d % 32) (range 1024)))
+
+(defonce discret-cosine-transform-32x32
+  (discret-cosine-transform-32x32-fn dct-indexes))
 
 (defn reduce-dct-32x32->8x8 [values]
   (for [x (range 32)
@@ -43,20 +48,14 @@
 
 ;; This is the fast version of the algorithm, only calculating the necessary transformations
 
-(defonce ^:private dct-indexes
+(defonce ^:private reduced-dct-indexes
   (for [x (range 32)
         y (range 32)
         :when (and (< x 8) (< y 8))]
     [x y]))
 
-(defn discret-cosine-transform-reduced-32x32
-  "https://www.math.cuhk.edu.hk/~lmlui/dct.pdf"
-  [values]
-  (mapv (fn [[i j]]
-          (* scale-factor
-             (coefficient i) (coefficient j)
-             (dct-sum-32x32 values i j)))
-        dct-indexes))
+(defonce discret-cosine-transform-reduced-32x32
+  (discret-cosine-transform-32x32-fn reduced-dct-indexes))
 
 ; TODO: Test if this works + Implement a function for fingerprint images
 ; https://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html

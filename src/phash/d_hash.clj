@@ -6,8 +6,6 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
 
-; TODO: Add tests
-
 (defrecord DHash [^Long width ^Long height reducer init]
   u/HashFn
   (image->hash-bits [_ image]
