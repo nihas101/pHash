@@ -13,3 +13,5 @@ pom.xml.asc
 
 .eastwood
 .lsp/
+
+.calva/output-window/output.calva-repl
