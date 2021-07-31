@@ -36,29 +36,29 @@
   (testing "hamming-distance of the a seq with two different elements is 2"
     (is (= 2 (hamming-distance [1 0] [0 1])))))
 
-(deftest pixel-brightness-0-test
-  (testing "pixel-brightness of no color is 0"
-    (is (= 0.0 (pixel-brightness 0 0 0)))))
+(deftest rgb-brightness-0-test
+  (testing "rgb-brightness of no color is 0"
+    (is (= 0.0 (rgb-brightness 0 0 0)))))
 
-(deftest pixel-brightness-255-test
-  (testing "pixel-brightness of [255 255 255] is 255"
-    (is (= 255.0 (pixel-brightness 255 255 255)))))
+(deftest rgb-brightness-255-test
+  (testing "rgb-brightness of [255 255 255] is 255"
+    (is (= 255.0 (rgb-brightness 255 255 255)))))
 
-(deftest pixel-brightness-red-test
-  (testing "pixel-brightness of red is 0"
-    (is (= 0.299 (pixel-brightness 1 0 0)))))
+(deftest rgb-brightness-red-test
+  (testing "rgb-brightness of red is 0"
+    (is (= 0.299 (rgb-brightness 1 0 0)))))
 
-(deftest pixel-brightness-blue-test
-  (testing "pixel-brightness of blue is 0"
-    (is (= 0.587 (pixel-brightness 0 1 0)))))
+(deftest rgb-brightness-blue-test
+  (testing "rgb-brightness of blue is 0"
+    (is (= 0.587 (rgb-brightness 0 1 0)))))
 
-(deftest pixel-brightness-green-test
-  (testing "pixel-brightness of green is 0"
-    (is (= 0.114 (pixel-brightness 0 0 1)))))
+(deftest rgb-brightness-green-test
+  (testing "rgb-brightness of green is 0"
+    (is (= 0.114 (rgb-brightness 0 0 1)))))
 
 (deftest brightness-per-pixel-test
   (testing "brightness-per-pixel of test-image"
-    (let [pxls-brightness (brightness-per-pixel (resize (first tu/compr) 8 8))]
+    (let [pxls-brightness (brightness-per-pixel (resize-image (first tu/compr) 8 8))]
       (is (= 64 (count pxls-brightness)))
       (is (every? (complement neg?) pxls-brightness)))))
 

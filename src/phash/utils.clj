@@ -8,10 +8,14 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
 
-(defn idx-in->idx-2d [^Long idx ^Long width]
+(defn idx-in->idx-2d
+  "Translates a 1D index into a 2D index."
+  [^Long idx ^Long width]
   [(rem idx width) (quot idx width)])
 
-(defn idx-2d->idx-lin [^Long x ^Long y ^Long width]
+(defn idx-2d->idx-lin
+  "Translates a 2D index into a 1D index."
+  [^Long x ^Long y ^Long width]
   (+ (* y width) x))
 
 (defn bit->long
@@ -20,14 +24,21 @@
   ([[^Long hash ^Long exp] ^Long bit]
    [(+ hash (* bit exp)) (*' exp 2)]))
 
-(defn hamming-distance [bits-a bits-b]
+(defn hamming-distance
+  "Calculates the hamming distance between two Seqable collections."
+  [seq-a seq-b]
   (count
    (filter (fn [[^Long a ^Long b]] (not= a b))
-           (mapv vector bits-a bits-b))))
+           (mapv vector seq-a seq-b))))
 
 (defonce grayscale (filt/grayscale))
 
-(defn pixel-brightness
+(defn rgb-brightness
+  "Calculates the brightness of RGB-components `red`, `green` and `blue`.
+   
+   Calling the function with a reducing function will return a transducer,
+   which takes a tuple of RGB-values and calculates their brightness before
+   passing it along to the reducing function."
   ([^Long red ^Long green ^Long blue]
    ;; Source: https://www.stemmer-imaging.com/en/knowledge-base/grey-level-grey-value/
    (+ (* 0.299 red) (* 0.587 green) (* 0.114 blue)))
@@ -37,18 +48,21 @@
      ([pxl-brightness] (rf pxl-brightness))
      ([pxl-brightness rgb]
       (let [[^Long red ^Long green ^Long blue] rgb]
-        (rf pxl-brightness (pixel-brightness red green blue)))))))
+        (rf pxl-brightness (rgb-brightness red green blue)))))))
 
-(defn brightness-per-pixel [^java.awt.Image image]
+(defn brightness-per-pixel
+  "Calculates the brightness of every pixel in an image and returns a linear seq
+   of their brightness-values."
+  [^java.awt.Image image]
   (transduce
    (comp (map col/components-rgb)
-         pixel-brightness)
+         rgb-brightness)
    conj
    (im/get-pixels image)))
 
 (def new-image im/new-image)
 (def load-image im/load-image)
-(def resize im/resize)
+(def resize-image im/resize)
 (def get-pixels im/get-pixels)
 
 (defprotocol HashFn

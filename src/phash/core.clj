@@ -15,12 +15,12 @@
 (defn perceptual-hash
   ([{:keys [width height] :as hash-fn} ^java.awt.Image image]
    (as-> image im
-     (u/resize im width height)
+     (u/resize-image im width height)
      (u/grayscale im)
      (u/image->hash-bits hash-fn im)))
   ; TODO: Debug fn remove after done
   ([{:keys [width height] :as hash-fn} image debug-fn]
-   (let [resized-image (u/resize image width height)
+   (let [resized-image (u/resize-image image width height)
          gray (u/grayscale resized-image)]
      (debug-fn image)
      (debug-fn resized-image)

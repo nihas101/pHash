@@ -12,7 +12,9 @@
 
 (defonce max-image-size 400)
 
-(defn- scale-image-to-size [image]
+(defn- scale-image-to-size
+  "Scales the pixels an image to the appropriate size for the debug-gui."
+  [image]
   (let [largest-side (max (im/width image) (im/height image))
         factor (/ max-image-size largest-side)
         scaled-image (im/new-image (* factor (im/width image)) (* factor (im/height image)))
@@ -23,12 +25,20 @@
              ^java.awt.image.BufferedImage image
              ^java.awt.image.BufferedImage scaled-image)))
 
-(defn- add-node-to-display! [id node]
+(defn- add-node-to-display!
+  "Adds node `node` to panel with panel-ID `panel-id`."
+  [panel-id node]
   (sc/invoke-later
    (swap! panels (fn [panels]
-                   (update panels id (fn [panel] (sc/config! panel :items (concat (sc/config panel :items) [node]))))))))
+                   (update panels panel-id
+                           (fn [panel]
+                             (sc/config! panel :items
+                                         (concat (sc/config panel :items)
+                                                 [node]))))))))
 
-(defn add-image-to-display! [id image]
+(defn add-image-to-display!
+  "Adds image `image` to panel with panel-ID `panel-id`."
+  [id image]
   (let [icon (sc/label :icon
                        (scale-image-to-size image))]
     (add-node-to-display! id icon)))
@@ -37,7 +47,9 @@
 
 (def show im/show)
 
-(defn gui! []
+(defn gui!
+  "Sets up and displays a GUI for debug purposes."
+  []
   (sc/native!)
   (let [a (sc/horizontal-panel)
         b (sc/horizontal-panel)]

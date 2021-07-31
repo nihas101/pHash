@@ -10,7 +10,7 @@
 
 (defonce test-vals (-> tu/compr
                        first
-                       (u/resize ,,, 32 32)
+                       (u/resize-image ,,, 32 32)
                        u/grayscale
                        u/get-pixels))
 
