@@ -68,7 +68,3 @@
 (defonce blur (mapv #(u/load-image (str blur-path-prefix % ".bmp")) file-names))
 (defonce misc (mapv #(u/load-image (str misc-path-prefix % ".bmp")) file-names))
 (defonce rotd (mapv #(u/load-image (str rotd-path-prefix % ".bmp")) file-names))
-
-(defonce test-image (first compr))
-
-(defonce tiny-test-image (u/resize test-image 8 8))

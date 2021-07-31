@@ -39,4 +39,4 @@
                   (< (u/hamming-distance
                       (core/perceptual-hash hash-fn im)
                       (core/perceptual-hash hash-fn (tu/blur-filter im)))
-                     30))))
+                     40))))

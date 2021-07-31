@@ -13,36 +13,36 @@
 
 (deftest perceptual-a-hash-test
   (testing "a-hash test"
-    (is (= 18391610165931278335 (perceptual-hash a-hash-fn tu/test-image)))))
+    (is (= 18391610165931278335 (perceptual-hash a-hash-fn (first tu/compr))))))
 
 (deftest perceptual-a-hash-bits-test
   (testing "a-hash-bits test"
     (is (= "1111111111111111110100111100001100000000000001000011110011111111"
-           (s/join (perceptual-hash a-hash-bits-fn tu/test-image))))))
+           (s/join (perceptual-hash a-hash-bits-fn (first tu/compr)))))))
 
 (defonce ^:private d-hash-fn (d/d-hash))
 (defonce ^:private d-hash-bits-fn (d/d-hash conj []))
 
 (deftest perceptual-d-hash-test
   (testing "d-hash test"
-    (is (= 10230146609244943637 (perceptual-hash d-hash-fn tu/test-image)))))
+    (is (= 10230146609244943637 (perceptual-hash d-hash-fn (first tu/compr))))))
 
 (deftest perceptual-d-hash-bits-test
   (testing "d-hash-bits test"
     (is (= "1010100010101100011011000010110111000100000100110001111110110001"
-           (s/join (perceptual-hash d-hash-bits-fn tu/test-image))))))
+           (s/join (perceptual-hash d-hash-bits-fn (first tu/compr)))))))
 
 (defonce ^:private p-hash-fn (p/p-hash))
 (defonce ^:private p-hash-bits-fn (p/p-hash conj []))
 
 (deftest perceptual-p-hash-test
   (testing "p-hash test"
-    (is (= 72060892623284135 (perceptual-hash p-hash-fn tu/test-image)))))
+    (is (= 72060892623284135 (perceptual-hash p-hash-fn (first tu/compr))))))
 
 (deftest perceptual-p-hash-bits-test
   (testing "p-hash-bits test"
     (is (= "1110010111100100010000001100000000000000110000000000000010000000"
-           (s/join (perceptual-hash p-hash-bits-fn tu/test-image))))))
+           (s/join (perceptual-hash p-hash-bits-fn (first tu/compr)))))))
 
 ;; aHash
 

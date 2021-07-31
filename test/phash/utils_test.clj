@@ -2,7 +2,7 @@
   (:require
    [clojure.test :refer :all]
    [phash.utils :refer :all]
-   [phash.test-utils :as u]))
+   [phash.test-utils :as tu]))
 
 (deftest bits->long-0-0-test
   (testing "bit->long 0 0 test"
@@ -58,7 +58,7 @@
 
 (deftest brightness-per-pixel-test
   (testing "brightness-per-pixel of test-image"
-    (let [pxls-brightness (brightness-per-pixel u/tiny-test-image)]
+    (let [pxls-brightness (brightness-per-pixel (resize (first tu/compr) 8 8))]
       (is (= 64 (count pxls-brightness)))
       (is (every? (complement neg?) pxls-brightness)))))
 
