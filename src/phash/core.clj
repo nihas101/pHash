@@ -19,7 +19,7 @@
    (as-> image im
      (u/resize-image im width height)
      (u/grayscale im)
-     (u/image->hash-bits hash-fn im reducer init)))
+     (u/image->hash hash-fn im reducer init)))
   ; TODO: Debug fn remove after done
   ([{:keys [width height] :as hash-fn} image debug-fn]
    (let [resized-image (u/resize-image image width height)
@@ -27,7 +27,7 @@
      (debug-fn image)
      (debug-fn resized-image)
      (debug-fn gray)
-     (u/image->hash-bits hash-fn gray))))
+     (u/image->hash hash-fn gray))))
 
 (defn image-distance ^Long [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b]
   (u/hamming-distance

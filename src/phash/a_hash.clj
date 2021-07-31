@@ -8,9 +8,8 @@
 
 (defrecord AHash [^Long width ^Long height]
   u/HashFn
-  ; TODO: Rename to image->hash
-  (image->hash-bits [this image] (u/image->hash-bits this image u/bit->long [0 1]))
-  (image->hash-bits [_ image reducer init]
+  (image->hash [this image] (u/image->hash this image u/bit->long [0 1]))
+  (image->hash [_ image reducer init]
     (let [pxls-brightness (u/brightness-per-pixel image)]
       (when (seq pxls-brightness)
         (let [avg-brightness (/ (reduce + pxls-brightness) (count pxls-brightness))]
@@ -24,7 +23,7 @@
 (defonce ^:private height width)
 
 (defn a-hash
-  "Creates a hash-function for use with phash.utils/image->hash-bits.
+  "Creates a hash-function for use with phash.utils/image->hash.
    
    Optionally also accepts `width` and `height`, which influence
    the size of the hash.

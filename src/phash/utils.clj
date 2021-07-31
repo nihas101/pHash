@@ -72,5 +72,5 @@
    an alternate manner, i.e. passing `conj` and `[]` will return the
    bits in a vector.
    Passing no arguments will create function that outputs the hash as a long."
-  (image->hash-bits [this image]
+  (image->hash [this image]
     [this image reducer init] "Calculate a hash from an image"))

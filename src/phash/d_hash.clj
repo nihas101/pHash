@@ -8,8 +8,8 @@
 
 (defrecord DHash [^Long width ^Long height]
   u/HashFn
-  (image->hash-bits [this image] (u/image->hash-bits this image u/bit->long [0 1]))
-  (image->hash-bits [_ image reducer init]
+  (image->hash [this image] (u/image->hash this image u/bit->long [0 1]))
+  (image->hash [_ image reducer init]
     (transduce
      (comp
       ;; Split into overlapping packs of two elements
@@ -24,7 +24,7 @@
 (defonce ^:private height 8)
 
 (defn d-hash
-  "Creates a hash-function for use with phash.utils/image->hash-bits.
+  "Creates a hash-function for use with phash.utils/image->hash.
    
    Optionally also accepts `width` and `height`, which influence
    the size of the hash.

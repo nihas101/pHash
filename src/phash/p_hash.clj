@@ -17,8 +17,8 @@
 
 (defrecord PHash [^Long width ^Long height]
   u/HashFn
-  (image->hash-bits [this image] (u/image->hash-bits this image u/bit->long [0 1]))
-  (image->hash-bits [_ image reducer init]
+  (image->hash [this image] (u/image->hash this image u/bit->long [0 1]))
+  (image->hash [_ image reducer init]
     (let [dct (dct-32x32 image)
           avg-dct (/ (reduce + dct) (count dct))]
       (transduce
@@ -30,5 +30,5 @@
 (defonce ^:private height width)
 
 (defn p-hash
-  "Creates a hash-function for use with phash.utils/image->hash-bits."
+  "Creates a hash-function for use with phash.utils/image->hash."
   [] (PHash. width height))
