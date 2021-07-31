@@ -13,11 +13,13 @@
 (set! *unchecked-math* true)
 
 (defn perceptual-hash
-  ([{:keys [width height] :as hash-fn} ^java.awt.Image image]
+  ([hash-fn ^java.awt.Image image]
+   (perceptual-hash hash-fn image u/bit->long [0 1]))
+  ([{:keys [width height] :as hash-fn} ^java.awt.Image image reducer init]
    (as-> image im
      (u/resize-image im width height)
      (u/grayscale im)
-     (u/image->hash-bits hash-fn im)))
+     (u/image->hash-bits hash-fn im reducer init)))
   ; TODO: Debug fn remove after done
   ([{:keys [width height] :as hash-fn} image debug-fn]
    (let [resized-image (u/resize-image image width height)
@@ -27,23 +29,11 @@
      (debug-fn gray)
      (u/image->hash-bits hash-fn gray))))
 
-(defmulti hash-method identity)
-
-(defmethod hash-method :a-hash [_]
-  (ah/a-hash conj []))
-
-(defmethod hash-method :d-hash [_]
-  (dh/d-hash conj []))
-
-(defmethod hash-method :p-hash [_]
-  (ph/p-hash conj []))
-
 (defn image-distance ^Long [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b]
   (u/hamming-distance
-   (perceptual-hash hash-fn image-a)
-   (perceptual-hash hash-fn image-b)))
+   (perceptual-hash hash-fn image-a conj [])
+   (perceptual-hash hash-fn image-b conj [])))
 
-; TODO: Add tests
 (defn eq-images? [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b ^Long threshold]
   (< (image-distance hash-fn image-a image-b) threshold))
 
@@ -53,7 +43,7 @@
         image-b (u/load-image b)
         debug-a (partial d/add-image-to-display! :a)
         debug-b (partial d/add-image-to-display! :b)
-        im-dist (image-distance :a-hash image-a image-b)
+        im-dist (image-distance (ah/a-hash) image-a image-b)
         a-hash-bits (ah/a-hash conj [])]
     (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash a-hash-bits image-a debug-a)) " "))
     (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash a-hash-bits image-b debug-b)) " "))
@@ -66,7 +56,7 @@
         image-b (u/load-image b)
         debug-a (partial d/add-image-to-display! :a)
         debug-b (partial d/add-image-to-display! :b)
-        im-dist (image-distance :d-hash image-a image-b)
+        im-dist (image-distance (dh/d-hash) image-a image-b)
         d-hash-bits (dh/d-hash conj [])]
     (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash d-hash-bits image-a debug-a)) " "))
     (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash d-hash-bits image-b debug-b)) " "))
@@ -79,7 +69,7 @@
         image-b (u/load-image b)
         debug-a (partial d/add-image-to-display! :a)
         debug-b (partial d/add-image-to-display! :b)
-        im-dist (image-distance :p-hash image-a image-b)
+        im-dist (image-distance (ph/p-hash) image-a image-b)
         p-hash-bits (ph/p-hash conj [])]
     (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash p-hash-bits image-a debug-a)) " "))
     (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash p-hash-bits image-b debug-b)) " "))

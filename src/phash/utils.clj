@@ -66,5 +66,11 @@
 (def get-pixels im/get-pixels)
 
 (defprotocol HashFn
-  "A hash function used to calculate a hash from an image."
-  (image->hash-bits [this image] "Calculate a hash from an image"))
+  "A hash function used to calculate a hash from an image.
+   
+   Optionally accepts a `reducer` and `init` value to join hash bits in
+   an alternate manner, i.e. passing `conj` and `[]` will return the
+   bits in a vector.
+   Passing no arguments will create function that outputs the hash as a long."
+  (image->hash-bits [this image]
+    [this image reducer init] "Calculate a hash from an image"))
