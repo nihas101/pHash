@@ -22,19 +22,19 @@
 
 (deftest hamming-distance-empty-test
   (testing "hamming-distance of an empty seq is 0"
-    (is (= 0 (hamming-distance [] [])))))
+    (is (= 0 (hamming-distance 0 0)))))
 
 (deftest hamming-distance-equal-test
   (testing "hamming-distance of the same seq is 0"
-    (is (= 0 (hamming-distance [1] [1])))))
+    (is (= 0 (hamming-distance 2r1 2r1)))))
 
 (deftest hamming-distance-one-diff-test
   (testing "hamming-distance of the a seq with one different elements is 1"
-    (is (= 1 (hamming-distance [1 1] [0 1])))))
+    (is (= 1 (hamming-distance 2r11 2r01)))))
 
 (deftest hamming-distance-two-diffs-test
   (testing "hamming-distance of the a seq with two different elements is 2"
-    (is (= 2 (hamming-distance [1 0] [0 1])))))
+    (is (= 2 (hamming-distance 2r10  2r01)))))
 
 (deftest rgb-brightness-0-test
   (testing "rgb-brightness of no color is 0"

@@ -15,7 +15,7 @@
       u/get-pixels
       dct/discret-cosine-transform-reduced-32x32))
 
-(defrecord PHash [^Long width ^Long height]
+(defrecord PHash [^long width ^long height]
   u/HashFn
   (image->hash [this image] (u/image->hash this image u/bit->long [0 1]))
   (image->hash [_ image reducer init]

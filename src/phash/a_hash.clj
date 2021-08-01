@@ -6,7 +6,7 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
 
-(defrecord AHash [^Long width ^Long height]
+(defrecord AHash [^long width ^long height]
   u/HashFn
   (image->hash [this image] (u/image->hash this image u/bit->long [0 1]))
   (image->hash [_ image reducer init]
@@ -29,4 +29,4 @@
    the size of the hash.
    By default a width and height of 8 are used, resulting in a 64-bit hash."
   ([] (a-hash width height))
-  ([^Long width ^Long height] (AHash. width height)))
+  ([^long width ^long height] (AHash. width height)))

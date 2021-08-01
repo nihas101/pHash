@@ -10,26 +10,24 @@
 
 (defn idx-in->idx-2d
   "Translates a 1D index into a 2D index."
-  [^Long idx ^Long width]
+  ^longs [^long idx ^long width]
   [(rem idx width) (quot idx width)])
 
 (defn idx-2d->idx-lin
   "Translates a 2D index into a 1D index."
-  [^Long x ^Long y ^Long width]
+  ^long [^long x ^long y ^long width]
   (+ (* y width) x))
 
 (defn bit->long
-  ([] [0 1])
-  ([[^Long hash _]] hash)
-  ([[^Long hash ^Long exp] ^Long bit]
-   [(+ hash (* bit exp)) (*' exp 2)]))
+  (^longs [] [0 1])
+  (^long [[^long hash _]] hash)
+  (^longs [[^long hash ^long exp] ^long bit]
+   [(+ hash (* bit exp)) (* exp 2)]))
 
 (defn hamming-distance
-  "Calculates the hamming distance between two Seqable collections."
-  [seq-a seq-b]
-  (count
-   (filter (fn [[^Long a ^Long b]] (not= a b))
-           (mapv vector seq-a seq-b))))
+  "Calculates the hamming distance between two longs."
+  ^long [^long a ^long b]
+  (Long/bitCount (bit-xor a b)))
 
 (defonce grayscale (filt/grayscale))
 
@@ -39,7 +37,7 @@
    Calling the function with a reducing function will return a transducer,
    which takes a tuple of RGB-values and calculates their brightness before
    passing it along to the reducing function."
-  ([^Long red ^Long green ^Long blue]
+  ([^long red ^long green ^long blue]
    ;; Source: https://www.stemmer-imaging.com/en/knowledge-base/grey-level-grey-value/
    (+ (* 0.299 red) (* 0.587 green) (* 0.114 blue)))
   ([rf]
@@ -47,13 +45,13 @@
      ([] (rf))
      ([pxl-brightness] (rf pxl-brightness))
      ([pxl-brightness rgb]
-      (let [[^Long red ^Long green ^Long blue] rgb]
+      (let [[^long red ^long green ^long blue] rgb]
         (rf pxl-brightness (rgb-brightness red green blue)))))))
 
 (defn brightness-per-pixel
   "Calculates the brightness of every pixel in an image and returns a linear seq
    of their brightness-values."
-  [^java.awt.Image image]
+  ^longs [^java.awt.Image image]
   (transduce
    (comp (map col/components-rgb)
          rgb-brightness)

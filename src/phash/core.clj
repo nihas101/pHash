@@ -29,12 +29,12 @@
      (debug-fn gray)
      (u/image->hash hash-fn gray))))
 
-(defn image-distance ^Long [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b]
+(defn image-distance ^long [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b]
   (u/hamming-distance
-   (perceptual-hash hash-fn image-a conj [])
-   (perceptual-hash hash-fn image-b conj [])))
+   (perceptual-hash hash-fn image-a)
+   (perceptual-hash hash-fn image-b)))
 
-(defn eq-images? [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b ^Long threshold]
+(defn eq-images? [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b ^long threshold]
   (< (image-distance hash-fn image-a image-b) threshold))
 
 (defn- debug-a [^String a ^String b]
@@ -44,7 +44,7 @@
         debug-a (partial d/add-image-to-display! :a)
         debug-b (partial d/add-image-to-display! :b)
         im-dist (image-distance (ah/a-hash) image-a image-b)
-        a-hash-bits (ah/a-hash conj [])]
+        a-hash-bits (ah/a-hash)]
     (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash a-hash-bits image-a debug-a)) " "))
     (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash a-hash-bits image-b debug-b)) " "))
     (d/add-text-to-display! :a (str " Distance:" im-dist))
@@ -57,7 +57,7 @@
         debug-a (partial d/add-image-to-display! :a)
         debug-b (partial d/add-image-to-display! :b)
         im-dist (image-distance (dh/d-hash) image-a image-b)
-        d-hash-bits (dh/d-hash conj [])]
+        d-hash-bits (dh/d-hash)]
     (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash d-hash-bits image-a debug-a)) " "))
     (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash d-hash-bits image-b debug-b)) " "))
     (d/add-text-to-display! :a (str " Distance:" im-dist))
@@ -70,7 +70,7 @@
         debug-a (partial d/add-image-to-display! :a)
         debug-b (partial d/add-image-to-display! :b)
         im-dist (image-distance (ph/p-hash) image-a image-b)
-        p-hash-bits (ph/p-hash conj [])]
+        p-hash-bits (ph/p-hash)]
     (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash p-hash-bits image-a debug-a)) " "))
     (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash p-hash-bits image-b debug-b)) " "))
     (d/add-text-to-display! :a (str " Distance:" im-dist))

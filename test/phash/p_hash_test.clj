@@ -21,20 +21,20 @@
 (ct/defspec noise-image-p-hash-prop-test 5
   (prop/for-all [im image-generator]
                 (< (u/hamming-distance
-                    (core/perceptual-hash p-hash-fn im conj [])
-                    (core/perceptual-hash p-hash-fn (tu/noise-filter im) conj []))
+                    (core/perceptual-hash p-hash-fn im)
+                    (core/perceptual-hash p-hash-fn (tu/noise-filter im)))
                    2)))
 
 (ct/defspec grayscale-image-p-hash-prop-test 5
   (prop/for-all [im image-generator]
                 (< (u/hamming-distance
-                    (core/perceptual-hash p-hash-fn im conj [])
-                    (core/perceptual-hash p-hash-fn (u/grayscale im) conj []))
+                    (core/perceptual-hash p-hash-fn im)
+                    (core/perceptual-hash p-hash-fn (u/grayscale im)))
                    1)))
 
 (ct/defspec blur-image-p-hash-prop-test 5
   (prop/for-all [im image-generator]
                 (< (u/hamming-distance
-                    (core/perceptual-hash p-hash-fn im conj [])
-                    (core/perceptual-hash p-hash-fn (tu/blur-filter im) conj []))
+                    (core/perceptual-hash p-hash-fn im)
+                    (core/perceptual-hash p-hash-fn (tu/blur-filter im)))
                    40)))

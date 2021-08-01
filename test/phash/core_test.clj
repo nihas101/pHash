@@ -27,18 +27,18 @@
 
 (deftest perceptual-a-hash-test
   (testing "a-hash test"
-    (is (= 18391610165931278335 (perceptual-hash a-hash-fn (first tu/compr))))))
+    (is (= -55133907778273281 (perceptual-hash a-hash-fn (first tu/compr))))))
 
 (defonce ^:private d-hash-fn (d/d-hash))
 
 (deftest perceptual-d-hash-test
   (testing "d-hash test"
-    (is (= 10230146609244943637 (perceptual-hash d-hash-fn (first tu/compr))))))
+    (is (= -8216597464464607979 (perceptual-hash d-hash-fn (first tu/compr))))))
 
 (deftest perceptual-d-hash-bits-test
   (testing "d-hash-bits test"
     (is (= "1010100010101100011011000010110111000100000100110001111110110001"
-           (s/join (perceptual-hash d-hash-fn (first tu/compr)  conj []))))))
+           (s/join (perceptual-hash d-hash-fn (first tu/compr) conj []))))))
 
 (defonce ^:private p-hash-fn (p/p-hash))
 
