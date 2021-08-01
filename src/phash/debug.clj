@@ -1,5 +1,11 @@
 (ns phash.debug
   (:require
+   [phash.core :as core]
+   [phash.utils :as u]
+   [phash.a-hash :as ah]
+   [phash.d-hash :as dh]
+   [phash.p-hash :as ph]
+   [clojure.string :as s]
    [seesaw.core :as sc]
    [mikera.image.core :as im])
   (:import
@@ -60,3 +66,61 @@
                    :on-close :exit)
          sc/pack!
          sc/show!))))
+
+(defn perceptual-hash
+  [{:keys [width height] :as hash-fn} image debug-fn reducer init]
+  (let [resized-image (u/resize-image image width height)
+        gray (u/grayscale resized-image)]
+    (debug-fn image)
+    (debug-fn resized-image)
+    (debug-fn gray)
+    (u/image->hash hash-fn gray reducer init)))
+
+(defn debug-a [^String a ^String b]
+  (gui!)
+  (let [image-a (u/load-image a)
+        image-b (u/load-image b)
+        debug-a (partial add-image-to-display! :a)
+        debug-b (partial add-image-to-display! :b)
+        im-dist (core/image-distance (ah/a-hash) image-a image-b)
+        a-hash-bits (ah/a-hash)]
+    (add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash a-hash-bits image-a debug-a conj [])) " "))
+    (add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash a-hash-bits image-b debug-b  conj [])) " "))
+    (add-text-to-display! :a (str " Distance:" im-dist))
+    (add-text-to-display! :b (str " Distance:" im-dist))))
+
+(defn debug-d [^String a ^String b]
+  (gui!)
+  (let [image-a (u/load-image a)
+        image-b (u/load-image b)
+        debug-a (partial add-image-to-display! :a)
+        debug-b (partial add-image-to-display! :b)
+        im-dist (core/image-distance (dh/d-hash) image-a image-b)
+        d-hash-bits (dh/d-hash)]
+    (add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash d-hash-bits image-a debug-a  conj [])) " "))
+    (add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash d-hash-bits image-b debug-b  conj [])) " "))
+    (add-text-to-display! :a (str " Distance:" im-dist))
+    (add-text-to-display! :b (str " Distance:" im-dist))))
+
+(defn debug-p [^String a ^String b]
+  (gui!)
+  (let [image-a (u/load-image a)
+        image-b (u/load-image b)
+        debug-a (partial add-image-to-display! :a)
+        debug-b (partial add-image-to-display! :b)
+        im-dist (core/image-distance (ph/p-hash) image-a image-b)
+        p-hash-bits (ph/p-hash)]
+    (add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash p-hash-bits image-a debug-a conj [])) " "))
+    (add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash p-hash-bits image-b debug-b conj [])) " "))
+    (add-text-to-display! :a (str " Distance:" im-dist))
+    (add-text-to-display! :b (str " Distance:" im-dist))))
+
+(comment
+  (debug-a "test/phash/test_images/compr/architecture_2.jpg"
+           "test/phash/test_images/compr/architecture_2.jpg")
+
+  (debug-d "test/phash/test_images/compr/architecture_2.jpg"
+           "test/phash/test_images/compr/architecture_2.jpg")
+
+  (debug-p "test/phash/test_images/compr/architecture_2.jpg"
+           "test/phash/test_images/compr/architecture_2.jpg"))
