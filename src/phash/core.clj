@@ -21,13 +21,13 @@
      (u/grayscale im)
      (u/image->hash hash-fn im reducer init)))
   ; TODO: Debug fn remove after done
-  ([{:keys [width height] :as hash-fn} image debug-fn]
+  ([{:keys [width height] :as hash-fn} image debug-fn reducer init]
    (let [resized-image (u/resize-image image width height)
          gray (u/grayscale resized-image)]
      (debug-fn image)
      (debug-fn resized-image)
      (debug-fn gray)
-     (u/image->hash hash-fn gray))))
+     (u/image->hash hash-fn gray reducer init))))
 
 (defn image-distance ^long [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b]
   (u/hamming-distance
@@ -45,8 +45,8 @@
         debug-b (partial d/add-image-to-display! :b)
         im-dist (image-distance (ah/a-hash) image-a image-b)
         a-hash-bits (ah/a-hash)]
-    (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash a-hash-bits image-a debug-a)) " "))
-    (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash a-hash-bits image-b debug-b)) " "))
+    (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash a-hash-bits image-a debug-a conj [])) " "))
+    (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash a-hash-bits image-b debug-b  conj [])) " "))
     (d/add-text-to-display! :a (str " Distance:" im-dist))
     (d/add-text-to-display! :b (str " Distance:" im-dist))))
 
@@ -58,8 +58,8 @@
         debug-b (partial d/add-image-to-display! :b)
         im-dist (image-distance (dh/d-hash) image-a image-b)
         d-hash-bits (dh/d-hash)]
-    (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash d-hash-bits image-a debug-a)) " "))
-    (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash d-hash-bits image-b debug-b)) " "))
+    (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash d-hash-bits image-a debug-a  conj [])) " "))
+    (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash d-hash-bits image-b debug-b  conj [])) " "))
     (d/add-text-to-display! :a (str " Distance:" im-dist))
     (d/add-text-to-display! :b (str " Distance:" im-dist))))
 
@@ -71,8 +71,8 @@
         debug-b (partial d/add-image-to-display! :b)
         im-dist (image-distance (ph/p-hash) image-a image-b)
         p-hash-bits (ph/p-hash)]
-    (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash p-hash-bits image-a debug-a)) " "))
-    (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash p-hash-bits image-b debug-b)) " "))
+    (d/add-text-to-display! :a (str " Hash:" (s/join (perceptual-hash p-hash-bits image-a debug-a conj [])) " "))
+    (d/add-text-to-display! :b (str " Hash:" (s/join (perceptual-hash p-hash-bits image-b debug-b conj [])) " "))
     (d/add-text-to-display! :a (str " Distance:" im-dist))
     (d/add-text-to-display! :b (str " Distance:" im-dist))))
 
