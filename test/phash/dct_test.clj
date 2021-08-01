@@ -17,7 +17,7 @@
 (defn- close-to-equal [as bs epsilon]
   (transduce
    (comp
-    (map (fn [[a b]] (if (= a b) 0 (- a b))))
+    (map (fn ^long [[a b]] (if (= a b) 0 (- a b))))
     (map #(Math/abs %))
     (filter (fn [diff] (< epsilon diff))))
    (fn
