@@ -1,10 +1,10 @@
-(ns phash.debug
+(ns de.nihas101.phash.debug
   (:require
-   [phash.core :as core]
-   [phash.utils :as u]
-   [phash.a-hash :as ah]
-   [phash.d-hash :as dh]
-   [phash.p-hash :as ph]
+   [de.nihas101.phash.core :as core]
+   [de.nihas101.phash.utils :as u]
+   [de.nihas101.phash.a-hash :as ah]
+   [de.nihas101.phash.d-hash :as dh]
+   [de.nihas101.phash.p-hash :as ph]
    [clojure.string :as s]
    [seesaw.core :as sc]
    [mikera.image.core :as im])

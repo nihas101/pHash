@@ -1,9 +1,9 @@
-(ns phash.dct-test
+(ns de.nihas101.phash.dct-test
   (:require
    [clojure.test :refer :all]
-   [phash.dct :refer :all]
-   [phash.utils :as u]
-   [phash.test-utils :as tu]
+   [de.nihas101.phash.dct :refer :all]
+   [de.nihas101.phash.utils :as u]
+   [de.nihas101.phash.test-utils :as tu]
    [clojure.test.check.generators :as gen]
    [clojure.test.check.clojure-test :as ct]
    [clojure.test.check.properties :as prop]))

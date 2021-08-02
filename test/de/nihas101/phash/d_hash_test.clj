@@ -1,10 +1,10 @@
-(ns phash.d-hash-test
+(ns de.nihas101.phash.d-hash-test
   (:require
    [clojure.test :refer :all]
-   [phash.d-hash :refer :all]
-   [phash.utils :as u]
-   [phash.core :as core]
-   [phash.test-utils :as tu]
+   [de.nihas101.phash.d-hash :refer :all]
+   [de.nihas101.phash.utils :as u]
+   [de.nihas101.phash.core :as core]
+   [de.nihas101.phash.test-utils :as tu]
    [clojure.test.check.clojure-test :as ct]
    [clojure.test.check.properties :as prop]))
 

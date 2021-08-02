@@ -1,11 +1,7 @@
-(ns phash.core
+(ns de.nihas101.phash.core
   (:require
-   [phash.utils :as u])
+   [de.nihas101.phash.utils :as u])
   (:gen-class))
-
-; TODO: Remove after done
-(set! *warn-on-reflection* true)
-(set! *unchecked-math* true)
 
 (defn perceptual-hash
   "Calculates the perceptual hash of image `image` based on the given `hash-fn`.

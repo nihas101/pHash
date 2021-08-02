@@ -1,8 +1,8 @@
-(ns phash.utils-test
+(ns de.nihas101.phash.utils-test
   (:require
    [clojure.test :refer :all]
-   [phash.utils :refer :all]
-   [phash.test-utils :as tu]))
+   [de.nihas101.phash.utils :refer :all]
+   [de.nihas101.phash.test-utils :as tu]))
 
 (deftest bits->long-0-0-test
   (testing "bit->long 0 0 test"

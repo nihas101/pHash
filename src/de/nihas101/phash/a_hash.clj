@@ -1,10 +1,6 @@
-(ns phash.a-hash
+(ns de.nihas101.phash.a-hash
   (:require
-   [phash.utils :as u]))
-
-; TODO: Remove after done
-(set! *warn-on-reflection* true)
-(set! *unchecked-math* true)
+   [de.nihas101.phash.utils :as u]))
 
 (defrecord AHash [^long width ^long height]
   u/HashFn

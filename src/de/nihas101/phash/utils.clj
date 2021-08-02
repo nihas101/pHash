@@ -1,4 +1,4 @@
-(ns phash.utils
+(ns de.nihas101.phash.utils
   (:require
    [mikera.image.filters :as filt]
    [mikera.image.colours :as col]

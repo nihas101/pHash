@@ -1,6 +1,6 @@
-(ns phash.dct
+(ns de.nihas101.phash.dct
   (:require
-   [phash.utils :as u]))
+   [de.nihas101.phash.utils :as u]))
 
 ; TODO: Remove after done
 (set! *warn-on-reflection* true)

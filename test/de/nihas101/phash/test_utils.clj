@@ -1,13 +1,9 @@
-(ns phash.test-utils
+(ns de.nihas101.phash.test-utils
   (:require
    [mikera.image.filters :as filt]
    [mikera.image.core :as im]
-   [phash.utils :as u]
+   [de.nihas101.phash.utils :as u]
    [clojure.test.check.generators :as gen]))
-
-; TODO: Remove after done
-(set! *warn-on-reflection* true)
-(set! *unchecked-math* true)
 
 (defonce blur-filter (filt/blur))
 (defonce noise-filter (filt/noise))
@@ -21,7 +17,7 @@
   (gen/bind (blank-image-gen min-size max-size)
             (fn [blank-image]
               (gen/tuple (gen/return blank-image)
-                         (gen/vector (gen/choose 1 Long/MAX_VALUE)
+                         (gen/vector (gen/choose 1 Integer/MAX_VALUE)
                                      (count (u/get-pixels blank-image)))))))
 
 ; TODO: Create a gen that changes an image slightly (some pixels)
@@ -30,15 +26,15 @@
   (gen/fmap (fn [[image colors]]
               (let [pixels ^ints (u/get-pixels image)]
                 (doseq [[idx color] (mapv vector (range) colors)]
-                  (aset pixels ^long idx ^long color))
+                  (aset pixels ^long idx ^int color))
                 (im/set-pixels image pixels))
               image)
             (color+image-gen min-size max-size)))
 
-(defonce ^:private compr-path-prefix "test/phash/test_images/compr/")
-(defonce ^:private blur-path-prefix "test/phash/test_images/blur/")
-(defonce ^:private misc-path-prefix "test/phash/test_images/misc/")
-(defonce ^:private rotd-path-prefix "test/phash/test_images/rotd/")
+(defonce ^:private compr-path-prefix "test/de/nihas101/phash/test_images/compr/")
+(defonce ^:private blur-path-prefix "test/de/nihas101/phash/test_images/blur/")
+(defonce ^:private misc-path-prefix "test/de/nihas101/phash/test_images/misc/")
+(defonce ^:private rotd-path-prefix "test/de/nihas101/phash/test_images/rotd/")
 
 (defonce ^:private file-names ["architecture_2"
                                "architecture1"

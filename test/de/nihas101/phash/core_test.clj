@@ -1,11 +1,11 @@
-(ns phash.core-test
+(ns de.nihas101.phash.core-test
   (:require
    [clojure.test :refer :all]
-   [phash.core :refer :all]
-   [phash.a-hash :as a]
-   [phash.d-hash :as d]
-   [phash.p-hash :as p]
-   [phash.test-utils :as tu]
+   [de.nihas101.phash.core :refer :all]
+   [de.nihas101.phash.a-hash :as a]
+   [de.nihas101.phash.d-hash :as d]
+   [de.nihas101.phash.p-hash :as p]
+   [de.nihas101.phash.test-utils :as tu]
    [clojure.string :as s]))
 
 (defonce ^:private a-hash-fn (a/a-hash))

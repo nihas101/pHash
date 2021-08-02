@@ -1,11 +1,7 @@
-(ns phash.p-hash
+(ns de.nihas101.phash.p-hash
   (:require
-   [phash.utils :as u]
-   [phash.dct :as dct]))
-
-; TODO: Remove after done
-(set! *warn-on-reflection* true)
-(set! *unchecked-math* true)
+   [de.nihas101.phash.utils :as u]
+   [de.nihas101.phash.dct :as dct]))
 
 (defn- dct-32x32
   "Computes the DCT of a 32x32 image,
