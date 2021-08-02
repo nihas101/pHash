@@ -1,4 +1,4 @@
-# phash
+# pHash [![Clojure CI](https://github.com/nihas101/pHash/actions/workflows/clojure.yml/badge.svg)](https://github.com/nihas101/pHash/actions/workflows/clojure.yml)
 
 A Clojure library designed to ... well, that part is up to you.
 
