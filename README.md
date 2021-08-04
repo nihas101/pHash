@@ -3,7 +3,7 @@
 A Clojure library for computing perceptual hashes. Currently aHash, dHash and pHash are supported.
 
 # Requirements
-Java 1.8 is required to run this program. Leiningen is required for building the library.
+**Java 1.8** is required to run this program. **Leiningen** is required for building and deploying the library.
 
 ## Usage
 
