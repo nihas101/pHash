@@ -27,9 +27,6 @@
 
 (defonce ^:private scale-factor (double (/ 1 (Math/sqrt 64))))
 
-;; This is the slow version of the algorithm,
-;; first calculating all 32x32 transformations before discarding 75% of them
-
 (defn discret-cosine-transform-32x32-fn
   "Calculates the DCT of a 32x32 matrix, according to:
    https://www.math.cuhk.edu.hk/~lmlui/dct.pdf"
@@ -41,6 +38,9 @@
                (coefficient j)
                (dct-sum-32x32 values i j)))
           dct-indexes)))
+
+;; This is the slow version of the algorithm,
+;; first calculating all 32x32 transformations before discarding 75% of them
 
 (defonce discret-cosine-transform-32x32
   (discret-cosine-transform-32x32-fn dct-indexes))
