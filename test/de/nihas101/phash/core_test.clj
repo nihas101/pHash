@@ -44,11 +44,11 @@
 
 (deftest perceptual-p-hash-test
   (testing "p-hash test"
-    (is (= 72060892623284135 (perceptual-hash p-hash-fn (first tu/compr))))))
+    (is (= 218427880512858047 (perceptual-hash p-hash-fn (first tu/compr))))))
 
 (deftest perceptual-p-hash-bits-test
   (testing "p-hash-bits test"
-    (is (= "1110010111100100010000001100000000000000110000000000000010000000"
+    (is (= "1111110111100101010000001100000000000000110000000001000011000000"
            (s/join (perceptual-hash p-hash-fn (first tu/compr) conj []))))))
 
 ;; aHash
