@@ -61,8 +61,3 @@
 
 (defonce discret-cosine-transform-reduced-32x32
   (discret-cosine-transform-32x32-fn reduced-dct-indexes))
-
-; TODO: Implement a function for fingerprint images
-; https://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html
-; https://www.math.cuhk.edu.hk/~lmlui/dct.pdf
-; https://github.com/lacogubik/phash/blob/master/src/phash/core.clj

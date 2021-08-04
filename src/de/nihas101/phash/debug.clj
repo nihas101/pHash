@@ -16,7 +16,7 @@
   (atom {:a nil
          :b nil}))
 
-(defonce max-image-size 400)
+(defonce max-image-size 200)
 
 (defn- scale-image-to-size
   "Scales the pixels an image to the appropriate size for the debug-gui."
@@ -25,7 +25,7 @@
         factor (/ max-image-size largest-side)
         scaled-image (im/new-image (* factor (im/width image)) (* factor (im/height image)))
         scale-instance (AffineTransform/getScaleInstance factor factor)
-        ; Use nearest neighbour so as to not introduce new colors back into the debug images
+        ;; Use nearest neighbour so as to not introduce new colors back into the debug images
         scaler (AffineTransformOp. scale-instance AffineTransformOp/TYPE_NEAREST_NEIGHBOR)]
     (.filter ^AffineTransformOp scaler
              ^java.awt.image.BufferedImage image
@@ -50,8 +50,6 @@
     (add-node-to-display! id icon)))
 
 (def add-text-to-display! add-node-to-display!)
-
-(def show im/show)
 
 (defn gui!
   "Sets up and displays a GUI for debug purposes."
