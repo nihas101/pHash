@@ -4,11 +4,7 @@
    [mikera.image.colours :as col]
    [mikera.image.core :as im]))
 
-; TODO: Remove after done
-(set! *warn-on-reflection* true)
-(set! *unchecked-math* true)
-
-(defn idx-in->idx-2d
+(defn idx-lin->idx-2d
   "Translates a 1D index into a 2D index."
   ^longs [^long idx ^long width]
   [(rem idx width) (quot idx width)])
@@ -19,10 +15,11 @@
   (+ (* y width) x))
 
 (defn bit->long
-  (^longs [] [0 1])
-  (^long [[^long hash _]] hash)
-  (^longs [[^long hash ^long exp] ^long bit]
-   [(+ hash (* bit exp)) (* exp 2)]))
+  ([] [0 1])
+  ([[hash _]] hash)
+  ([[^long hash ^long exp] ^long bit]
+   [(if (zero? bit) hash (+ hash exp))
+    (bit-shift-left exp 1)]))
 
 (defn hamming-distance
   "Calculates the hamming distance between two longs."

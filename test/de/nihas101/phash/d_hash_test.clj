@@ -13,26 +13,26 @@
 
 (defonce ^:private d-hash-fn (d-hash))
 
-(ct/defspec same-image-d-hash-prop-test 5
+(ct/defspec same-image-d-hash-prop-test 10
   (prop/for-all [im image-generator]
                 (= (core/perceptual-hash d-hash-fn im)
                    (core/perceptual-hash d-hash-fn im))))
 
-(ct/defspec noise-image-d-hash-prop-test 5
+(ct/defspec noise-image-d-hash-prop-test 10
   (prop/for-all [im image-generator]
                 (< (u/hamming-distance
                     (core/perceptual-hash d-hash-fn im)
                     (core/perceptual-hash d-hash-fn (tu/noise-filter im)))
                    20)))
 
-(ct/defspec grayscale-image-d-hash-prop-test 5
+(ct/defspec grayscale-image-d-hash-prop-test 10
   (prop/for-all [im image-generator]
                 (< (u/hamming-distance
                     (core/perceptual-hash d-hash-fn im)
                     (core/perceptual-hash d-hash-fn (u/grayscale im)))
                    8)))
 
-(ct/defspec blur-image-d-hash-prop-test 5
+(ct/defspec blur-image-d-hash-prop-test 10
   (prop/for-all [im image-generator]
                 (< (u/hamming-distance
                     (core/perceptual-hash d-hash-fn im)

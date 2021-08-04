@@ -41,7 +41,7 @@
                (dct-sum-32x32 values i j)))
           dct-indexes)))
 
-(defonce ^:private dct-indexes (mapv #(u/idx-in->idx-2d % 32) (range 1024)))
+(defonce ^:private dct-indexes (mapv #(u/idx-lin->idx-2d % 32) (range 1024)))
 
 (defonce discret-cosine-transform-32x32
   (discret-cosine-transform-32x32-fn dct-indexes))

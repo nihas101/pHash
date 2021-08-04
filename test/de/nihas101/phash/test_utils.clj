@@ -20,8 +20,6 @@
                          (gen/vector (gen/choose 1 Integer/MAX_VALUE)
                                      (count (u/get-pixels blank-image)))))))
 
-; TODO: Create a gen that changes an image slightly (some pixels)
-
 (defn image-gen [min-size max-size]
   (gen/fmap (fn [[image colors]]
               (let [pixels ^ints (u/get-pixels image)]

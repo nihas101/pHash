@@ -116,11 +116,11 @@
     (add-text-to-display! :b (str " Distance:" im-dist))))
 
 (comment
-  (debug-a "test/phash/test_images/compr/architecture_2.jpg"
-           "test/phash/test_images/compr/architecture_2.jpg")
+  (debug-a "test/de/nihas101/phash/test_images/compr/architecture_2.jpg"
+           "test/de/nihas101/phash/test_images/compr/architecture_2.jpg")
 
-  (debug-d "test/phash/test_images/compr/architecture_2.jpg"
-           "test/phash/test_images/compr/architecture_2.jpg")
+  (debug-d "test/de/nihas101/phash/test_images/compr/architecture_2.jpg"
+           "test/de/nihas101/phash/test_images/compr/architecture_2.jpg")
 
-  (debug-p "test/phash/test_images/compr/architecture_2.jpg"
-           "test/phash/test_images/compr/architecture_2.jpg"))
+  (debug-p "test/de/nihas101/phash/test_images/compr/architecture_2.jpg"
+           "test/de/nihas101/phash/test_images/compr/architecture_2.jpg"))
