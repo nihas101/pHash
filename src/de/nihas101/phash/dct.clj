@@ -39,8 +39,8 @@
                (dct-sum-32x32 values i j)))
           dct-indexes)))
 
-;; This is the slow version of the algorithm,
-;; first calculating all 32x32 transformations before discarding 75% of them
+;; This is the slow version of the algorithm:
+;; First calculates all 32x32 terms before discarding most of them again
 
 (defonce discret-cosine-transform-32x32
   (discret-cosine-transform-32x32-fn dct-indexes))
@@ -56,8 +56,8 @@
   (mapv (fn [[x y]] (get values (u/idx-2d->idx-lin x y 32)))
         reduced-dct-indexes))
 
-;; This is the fast version of the algorithm,
-;; only calculating the necessary transformations
+;; This is the fast version of the algorithm:
+;; Only calculates the necessary terms
 
 (defonce discret-cosine-transform-reduced-32x32
   (discret-cosine-transform-32x32-fn reduced-dct-indexes))
