@@ -13,6 +13,15 @@
 
 (defonce ^:private a-hash-fn (a-hash))
 
+(deftest image->hash-a-hash-test
+  (testing "u/image->hash using a-hash"
+    (is (= -55133907778273281
+           (u/image->hash a-hash-fn (-> tu/compr
+                                        first
+                                        (u/resize-image ,,, (:width a-hash-fn)
+                                                            (:height a-hash-fn))
+                                        u/grayscale))))))
+
 (ct/defspec same-image-a-hash-prop-test 10
   (prop/for-all [im image-generator]
                 (= (core/perceptual-hash a-hash-fn im)
