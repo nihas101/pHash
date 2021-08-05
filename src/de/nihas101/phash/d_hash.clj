@@ -21,7 +21,6 @@
 
 (defn d-hash
   "Creates a hash-function for use with phash.utils/image->hash.
-   
    Optionally also accepts `width` and `height`, which influence
    the size of the hash.
    By default a width and height of 8 are used, resulting in a 64-bit hash."

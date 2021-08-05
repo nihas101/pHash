@@ -30,12 +30,13 @@
 
 (defn rgb-brightness
   "Calculates the brightness of RGB-components `red`, `green` and `blue`.
-   
+
    Calling the function with a reducing function will return a transducer,
    which takes a tuple of RGB-values and calculates their brightness before
    passing it along to the reducing function."
   ([^long red ^long green ^long blue]
-   ;; Source: https://www.stemmer-imaging.com/en/knowledge-base/grey-level-grey-value/
+   ;; Source:
+   ;; https://www.stemmer-imaging.com/en/knowledge-base/grey-level-grey-value/
    (+ (* 0.299 red) (* 0.587 green) (* 0.114 blue)))
   ([rf]
    (fn
@@ -62,7 +63,7 @@
 
 (defprotocol HashFn
   "A hash function used to calculate a hash from an image.
-   
+
    Optionally accepts a `reducer` and `init` value to join hash bits in
    an alternate manner, i.e. passing `conj` and `[]` will return the
    bits in a vector.

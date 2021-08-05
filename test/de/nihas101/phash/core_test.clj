@@ -27,13 +27,15 @@
 
 (deftest perceptual-a-hash-test
   (testing "a-hash test"
-    (is (= -55133907778273281 (perceptual-hash a-hash-fn (first tu/compr))))))
+    (is (= -55133907778273281
+           (perceptual-hash a-hash-fn (first tu/compr))))))
 
 (defonce ^:private d-hash-fn (d/d-hash))
 
 (deftest perceptual-d-hash-test
   (testing "d-hash test"
-    (is (= -8216597464464607979 (perceptual-hash d-hash-fn (first tu/compr))))))
+    (is (= -8216597464464607979
+           (perceptual-hash d-hash-fn (first tu/compr))))))
 
 (deftest perceptual-d-hash-bits-test
   (testing "d-hash-bits test"
@@ -58,7 +60,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance a-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/compr)))
 
@@ -67,7 +70,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance a-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/blur)))
 
@@ -76,7 +80,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance a-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/misc)))
 
@@ -85,7 +90,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance a-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/rotd)))
 
@@ -94,7 +100,8 @@
     (mapv
      (fn [idx compressed blurred]
        (is (< (image-distance a-hash-fn compressed blurred) 7)
-           (str "Image with id " idx " has a hamming distance larger than 7")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 7")))
      (range)
      tu/compr
      tu/blur)))
@@ -104,7 +111,8 @@
     (mapv
      (fn [idx compressed misclns]
        (is (< (image-distance a-hash-fn compressed misclns) 3)
-           (str "Image with id " idx " has a hamming distance larger than 3")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 3")))
      (range)
      tu/compr
      tu/misc)))
@@ -114,7 +122,8 @@
     (mapv
      (fn [idx blurred misclns]
        (is (< (image-distance a-hash-fn blurred misclns) 7)
-           (str "Image with id " idx " has a hamming distance larger than 7")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 7")))
      (range)
      tu/blur
      tu/misc)))
@@ -126,7 +135,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance d-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/compr)))
 
@@ -135,7 +145,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance d-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/blur)))
 
@@ -144,7 +155,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance d-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/misc)))
 
@@ -153,7 +165,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance d-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/rotd)))
 
@@ -162,7 +175,8 @@
     (mapv
      (fn [idx compressed blurred]
        (is (< (image-distance d-hash-fn compressed blurred) 13)
-           (str "Image with id " idx " has a hamming distance larger than 13")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 13")))
      (range)
      tu/compr
      tu/blur)))
@@ -172,7 +186,8 @@
     (mapv
      (fn [idx compressed misclns]
        (is (< (image-distance d-hash-fn compressed misclns) 11)
-           (str "Image with id " idx " has a hamming distance larger than 11")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 11")))
      (range)
      tu/compr
      tu/misc)))
@@ -182,7 +197,8 @@
     (mapv
      (fn [idx blurred misclns]
        (is (< (image-distance d-hash-fn blurred misclns) 10)
-           (str "Image with id " idx " has a hamming distance larger than 10")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 10")))
      (range)
      tu/blur
      tu/misc)))
@@ -194,7 +210,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance p-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/compr)))
 
@@ -203,7 +220,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance p-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/blur)))
 
@@ -212,7 +230,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance p-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/misc)))
 
@@ -221,7 +240,8 @@
     (mapv
      (fn [idx image]
        (is (= 0 (image-distance p-hash-fn image image))
-           (str "Image with id " idx " has a hamming distance larger than 0 to itself")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 0 to itself")))
      (range)
      tu/rotd)))
 
@@ -230,7 +250,8 @@
     (mapv
      (fn [idx compressed blurred]
        (is (< (image-distance p-hash-fn compressed blurred) 5)
-           (str "Image with id " idx " has a hamming distance larger than 5")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 5")))
      (range)
      tu/compr
      tu/blur)))
@@ -240,7 +261,8 @@
     (mapv
      (fn [idx compressed misclns]
        (is (< (image-distance p-hash-fn compressed misclns) 2)
-           (str "Image with id " idx " has a hamming distance larger than 2")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 2")))
      (range)
      tu/compr
      tu/misc)))
@@ -250,7 +272,8 @@
     (mapv
      (fn [idx blurred misclns]
        (is (< (image-distance p-hash-fn blurred misclns) 5)
-           (str "Image with id " idx " has a hamming distance larger than 5")))
+           (str "Image with id " idx
+                " has a hamming distance larger than 5")))
      (range)
      tu/blur
      tu/misc)))

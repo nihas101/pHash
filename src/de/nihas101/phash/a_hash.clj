@@ -8,7 +8,8 @@
   (image->hash [_ image reducer init]
     (let [pxls-brightness (u/brightness-per-pixel image)]
       (when (seq pxls-brightness)
-        (let [avg-brightness (/ (reduce + pxls-brightness) (count pxls-brightness))]
+        (let [avg-brightness (/ (reduce + pxls-brightness)
+                                (count pxls-brightness))]
           (transduce
            (map
             (fn [pxl-brightness] (if (< pxl-brightness avg-brightness) 1 0)))
@@ -20,7 +21,6 @@
 
 (defn a-hash
   "Creates a hash-function for use with phash.utils/image->hash.
-   
    Optionally also accepts `width` and `height`, which influence
    the size of the hash.
    By default a width and height of 8 are used, resulting in a 64-bit hash."

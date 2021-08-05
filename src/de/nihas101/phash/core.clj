@@ -4,10 +4,9 @@
   (:gen-class))
 
 (defn perceptual-hash
-  "Calculates the perceptual hash of image `image` based on the given `hash-fn`.
-   
+  "Calculates the perceptual hash of image `image` (java.awt.Image)
+   based on the given `hash-fn`.
    See: `phash.a-hash`, `phash.d-hash`, `phash.p-hash`.
-   
    Can optionally accept a `reducer` and `init` to modify the process of
    combining the separate bits into the final hash."
   (^long [hash-fn ^java.awt.Image image]
@@ -19,9 +18,8 @@
      (u/image->hash hash-fn im reducer init))))
 
 (defn image-distance
-  "Calculates the distance of images `image-a` and `image-b`
+  "Calculates the distance of images `image-a` and `image-b` (java.awt.Image)
    based on the hash-function `hash-fn`.
-   
    See: `phash.a-hash`, `phash.d-hash`, `phash.p-hash`."
   ^long [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b]
   (u/hamming-distance
@@ -29,9 +27,9 @@
    (perceptual-hash hash-fn image-b)))
 
 (defn eq-images?
-  "Returns true if images `image-a` and `image-b` are similar enough, based
-   on the threshold `threshold` using the hash function `hash-fn`.
-   
+  "Returns true if images `image-a` and `image-b` (java.awt.Image)
+   are similar enough, based on the threshold `threshold`
+   using the hash function `hash-fn`.
    See: `phash.a-hash`, `phash.d-hash`, `phash.p-hash`."
   [hash-fn ^java.awt.Image image-a ^java.awt.Image image-b ^long threshold]
   (< (image-distance hash-fn image-a image-b) threshold))
