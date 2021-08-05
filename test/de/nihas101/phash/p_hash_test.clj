@@ -15,10 +15,10 @@
 
 (deftest image->hash-p-hash-test
   (testing "u/image->hash using p-hash"
-    (is (= 218427880512858047
+    (is (= 72060892623284135
            (u/image->hash p-hash-fn (-> tu/compr
                                         first
-                                        (u/resize-image ,,, (:width p-hash-fn) 
+                                        (u/resize-image ,,, (:width p-hash-fn)
                                                             (:height p-hash-fn))
                                         u/grayscale))))))
 
