@@ -1,4 +1,5 @@
 (ns de.nihas101.phash.p-hash
+  "Contains the functionality specific to pHash."
   (:require
    [de.nihas101.phash.utils :as u]
    [de.nihas101.phash.dct :as dct]))

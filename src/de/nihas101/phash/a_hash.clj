@@ -1,4 +1,5 @@
 (ns de.nihas101.phash.a-hash
+  "Contains the functionality specific to aHash."
   (:require
    [de.nihas101.phash.utils :as u]))
 

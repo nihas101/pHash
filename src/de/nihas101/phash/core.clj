@@ -1,4 +1,5 @@
 (ns de.nihas101.phash.core
+  "Top-level functionality for perceptual hashing."
   (:require
    [de.nihas101.phash.utils :as u])
   (:gen-class))

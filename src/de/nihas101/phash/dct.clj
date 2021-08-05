@@ -1,4 +1,6 @@
 (ns de.nihas101.phash.dct
+  "A implementation of the discret cosine transformation algorithm specific
+   to 32x32 images."
   (:require
    [de.nihas101.phash.utils :as u]))
 

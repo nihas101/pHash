@@ -1,4 +1,5 @@
 (ns de.nihas101.phash.utils
+  "Utility functions for perceptual hashes."
   (:require
    [mikera.image.filters :as filt]
    [mikera.image.colours :as col]
