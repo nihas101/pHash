@@ -29,7 +29,17 @@ A Clojure library for computing perceptual hashes. Currently aHash, dHash and pH
 ;; Returns true if img-a's and img-b's perceptual hashes (computed using pHash) differ in less than 5 bits
 (core/eq-images? (ph/p-hash) img-a img-b 5)
 ```
-Images can be loaded from a file-system with libraries such as [imagez](https://github.com/mikera/imagez).
+
+Images can be loaded from a file-system via [imagez](https://github.com/mikera/imagez) with:
+
+```
+(:require
+  [de.nihas101.phash.utils :as u])
+
+  (u/load-image "path/to/image")
+```
+
+or alternatively other libraries, that output `java.awt.Image` instances, can be used.
 
 ## License
 
