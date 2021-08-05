@@ -36,7 +36,7 @@ Images can be loaded from a file-system via [imagez](https://github.com/mikera/i
 (:require
   [de.nihas101.phash.utils :as u])
 
-  (u/load-image "path/to/image")
+(u/load-image "path/to/image")
 ```
 
 or alternatively other libraries, that output `java.awt.Image` instances, can be used.
