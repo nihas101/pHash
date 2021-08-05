@@ -39,7 +39,7 @@
                 (< (u/hamming-distance
                     (core/perceptual-hash d-hash-fn im)
                     (core/perceptual-hash d-hash-fn (u/grayscale im)))
-                   8)))
+                   9)))
 
 (ct/defspec blur-image-d-hash-prop-test 10
   (prop/for-all [im image-generator]
