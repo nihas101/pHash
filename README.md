@@ -39,7 +39,7 @@ Images can be loaded from a file-system via [imagez](https://github.com/mikera/i
 (u/load-image "path/to/image")
 ```
 
-or alternatively other libraries, that output `java.awt.Image` instances, can be used.
+Alternatively other libraries that output `java.awt.Image` instances can be used.
 
 ## License
 
