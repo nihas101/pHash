@@ -405,7 +405,7 @@
           -3.49397917236522E7 -1.001199652525241E7 -2108644.521084308
           -5588198.42949544 -1.1579314302565522E7 -641735.7842608448
           -993480.5597432326]
-         (reduce-dct-32x32->8x8
+         (reduce-dct-32x32
           (discret-cosine-transform-32x32 test-vals))
          epsilon))))
 
@@ -441,6 +441,6 @@
 
 (ct/defspec discret-cosine-transform-oracle-test 20
   (prop/for-all [dct-vals dct-values-gen]
-                (= (reduce-dct-32x32->8x8
+                (= (reduce-dct-32x32
                     (discret-cosine-transform-32x32 dct-vals))
                    (discret-cosine-transform-reduced-32x32 dct-vals))))

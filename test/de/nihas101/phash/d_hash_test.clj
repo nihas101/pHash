@@ -1,10 +1,12 @@
 (ns de.nihas101.phash.d-hash-test
   (:require
+   [clojure.string :as s]
    [clojure.test :refer :all]
    [de.nihas101.phash.d-hash :refer :all]
    [de.nihas101.phash.utils :as u]
    [de.nihas101.phash.core :as core]
    [de.nihas101.phash.test-utils :as tu]
+   [clojure.test.check.generators :as gen]
    [clojure.test.check.clojure-test :as ct]
    [clojure.test.check.properties :as prop]))
 
@@ -21,6 +23,38 @@
                                         (u/resize-image ,,, (:width d-hash-fn)
                                                             (:height d-hash-fn))
                                         u/grayscale))))))
+
+(deftest d-hash-size-too-small-test
+  (testing "d-hash-bits test with a hash size that is too small"
+    (is (thrown? IllegalArgumentException (d-hash 1)))))
+
+(deftest d-hash-size-negative-test
+  (testing "d-hash-bits test with a hash size that is negative"
+    (is (thrown? IllegalArgumentException (d-hash -1)))))
+
+(deftest d-hash-size-too-large-test
+  (testing "d-hash-bits test with a hash size that is too large"
+    (is (thrown? IllegalArgumentException (d-hash 65)))))
+
+(deftest d-hash-size-4-test
+  (testing "d-hash-bits test with a hash of size 4"
+    (is (= "1001"
+           (s/join (core/perceptual-hash (d-hash 4)
+                                         (first tu/compr) conj []))))))
+
+(deftest d-hash-size-16-test
+  (testing "d-hash-bits test with a hash of size 16"
+    (is (= "1000101010111011"
+           (s/join (core/perceptual-hash (d-hash 16)
+                                         (first tu/compr) conj []))))))
+
+(ct/defspec d-hash-size-prop-test 10
+  (prop/for-all [im image-generator
+                 hash-size (gen/fmap #(* % %) (gen/choose 2 6))]
+                (= hash-size
+                   (count (s/join
+                           (core/perceptual-hash (d-hash hash-size)
+                                                 im conj []))))))
 
 (ct/defspec same-image-d-hash-prop-test 10
   (prop/for-all [im image-generator]

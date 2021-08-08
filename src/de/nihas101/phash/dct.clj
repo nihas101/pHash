@@ -29,37 +29,39 @@
 
 (defonce ^:private scale-factor (double (/ 1 (Math/sqrt 64))))
 
-(defn discret-cosine-transform-32x32-fn
+(defn discret-cosine-transform-32x32
   "Calculates the DCT of a 32x32 matrix, according to:
    https://www.math.cuhk.edu.hk/~lmlui/dct.pdf"
-  [dct-indexes]
-  (fn ^longs [values]
-    (mapv (fn [[i j]]
-            (* ^double scale-factor
-               (coefficient i)
-               (coefficient j)
-               (dct-sum-32x32 values i j)))
-          dct-indexes)))
+  (^longs [values] (discret-cosine-transform-32x32 values dct-indexes))
+  (^longs [values dct-indexes]
+   (mapv (fn [[i j]]
+           (* ^double scale-factor
+              (coefficient i)
+              (coefficient j)
+              (dct-sum-32x32 values i j)))
+         dct-indexes)))
 
 ;; This is the slow version of the algorithm:
 ;; First calculates all 32x32 terms before discarding most of them again
 
-(defonce discret-cosine-transform-32x32
-  (discret-cosine-transform-32x32-fn dct-indexes))
-
-(defonce ^:private reduced-dct-indexes
-  (for [x (range 8)
-        y (range 8)]
-    [x y]))
-
-(defn reduce-dct-32x32->8x8
-  "Reduces a DCT of a 32x32 matrix to the matrix of the lowest 8x8 frequencies."
-  ^longs [values]
-  (mapv (fn [[x y]] (get values (u/idx-2d->idx-lin x y 32)))
-        reduced-dct-indexes))
+(defn reduce-dct-32x32
+  "Reduces a DCT of a 32x32 matrix to the matrix of the lowest
+   `matrix-size` x `matrix-size` frequencies."
+  (^longs [values] (reduce-dct-32x32 values 8))
+  (^longs [values matrix-size]
+   (mapv (fn [[x y]] (get values (u/idx-2d->idx-lin x y 32)))
+         (for [x (range matrix-size)
+               y (range matrix-size)]
+           [x y]))))
 
 ;; This is the fast version of the algorithm:
 ;; Only calculates the necessary terms
 
-(defonce discret-cosine-transform-reduced-32x32
-  (discret-cosine-transform-32x32-fn reduced-dct-indexes))
+(defn discret-cosine-transform-reduced-32x32
+  "Calculates a reduced (`matrix-size` x `matrix-size`) DCT of a 32x32 matrix."
+  ([values] (discret-cosine-transform-reduced-32x32 values 8))
+  ([values matrix-size]
+   (discret-cosine-transform-32x32 values
+                                   (for [x (range matrix-size)
+                                         y (range matrix-size)]
+                                     [x y]))))

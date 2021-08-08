@@ -49,8 +49,8 @@
   (gen/vector bit-gen n))
 
 (ct/defspec hamming-distance-prop-test 100
-  (prop/for-all [[a b] (gen/tuple (bit-pattern-gen 64)
-                                  (bit-pattern-gen 64))]
+  (prop/for-all [a (bit-pattern-gen 64)
+                 b (bit-pattern-gen 64)]
                 (= (count (filter (fn [[a b]] (not= a b))
                                   (mapv vector a b)))
                    (hamming-distance

@@ -17,13 +17,25 @@
      reducer init
      (u/brightness-per-pixel image))))
 
-(defonce ^:private width 9)
-(defonce ^:private height 8)
+(defonce ^:private dim 64)
 
 (defn d-hash
   "Creates a hash-function for use with phash.utils/image->hash.
-   Optionally also accepts `width` and `height`, which influence
-   the size of the hash.
-   By default a width and height of 8 are used, resulting in a 64-bit hash."
-  ([] (d-hash width height))
-  ([^long width ^long height] (DHash. width height)))
+   Optionally also accepts a `hash-size`, which influence the size of the hash.
+   Sizes of n*n where n = 2, ..., 8 are supported.
+   By default a width and height of 9 and 8 are used respectively,
+   resulting in a 64-bit hash."
+  ([] (d-hash dim))
+  ([^long hash-size]
+   (let [dim (long (Math/sqrt hash-size))]
+     (cond
+       (< hash-size 4) (throw
+                        (IllegalArgumentException.
+                         (str hash-size " is too small (min: 4)")))
+       (< 64 hash-size) (throw
+                         (IllegalArgumentException.
+                          (str hash-size " is too large (max: 64)")))
+       (not (zero? (mod dim 1))) (throw
+                                  (IllegalArgumentException.
+                                   (str hash-size " is not a square")))
+       :else (DHash. (inc (long dim)) (long dim))))))

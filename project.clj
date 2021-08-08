@@ -1,4 +1,4 @@
-(defproject phash "0.9.0"
+(defproject phash "0.10.0"
   :description "A library of perceptual hash algorithms (aHash, dHash, pHash)."
   :url "https://github.com/nihas101/pHash"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"

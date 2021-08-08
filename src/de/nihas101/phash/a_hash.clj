@@ -17,13 +17,25 @@
            reducer init
            pxls-brightness))))))
 
-(defonce ^:private width 8)
-(defonce ^:private height width)
+(defonce ^:private dim 64)
 
 (defn a-hash
   "Creates a hash-function for use with phash.utils/image->hash.
-   Optionally also accepts `width` and `height`, which influence
-   the size of the hash.
+   Optionally also accepts a `hash-size`, which influence
+   the size of the hash (in bits).
+   Sizes of n*n where n = 2, ..., 8 are supported.
    By default a width and height of 8 are used, resulting in a 64-bit hash."
-  ([] (a-hash width height))
-  ([^long width ^long height] (AHash. width height)))
+  ([] (a-hash dim))
+  ([^long hash-size]
+   (let [dim (Math/sqrt hash-size)]
+     (cond
+       (< hash-size 4) (throw
+                        (IllegalArgumentException.
+                         (str hash-size " is too small (min: 4)")))
+       (< 64 hash-size) (throw
+                         (IllegalArgumentException.
+                          (str hash-size " is too large (max: 64)")))
+       (not (zero? (mod dim 1))) (throw
+                                  (IllegalArgumentException.
+                                   (str hash-size " is not a square")))
+       :else (AHash. (long dim) (long dim))))))

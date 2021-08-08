@@ -8,7 +8,7 @@ A Clojure library for computing perceptual hashes. Currently aHash, dHash and pH
 ## Usage
 
 1. Deploy the library to your local repository (`~/.m2`) via `lein install -h`
-2. Include `[de.nihas101/phash "0.9.0"]` in the dependencies of your `project.clj`
+2. Include `[de.nihas101/phash "0.10.0"]` in the dependencies of your `project.clj`
 3. Require the necessary namespaces:
 ```
 (ns example
@@ -28,6 +28,12 @@ A Clojure library for computing perceptual hashes. Currently aHash, dHash and pH
 
 ;; Returns true if img-a's and img-b's perceptual hashes (computed using pHash) differ in less than 5 bits
 (core/eq-images? (ph/p-hash) img-a img-b 5)
+```
+
+To set the number of bits used for the hash, simply pass the size to the corresponding hashing function. _Note_ that hash sizes should always be a squares (i.e. n*n). By default the hash will always have 64 bits.
+```
+;; Calculate the perceptual hash (of 4 bits) of image img using aHash
+(core/perceptual-hash (ah/a-hash 4) img)
 ```
 
 Images can be loaded from a file-system via [imagez](https://github.com/mikera/imagez) with:
