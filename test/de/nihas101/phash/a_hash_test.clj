@@ -48,9 +48,15 @@
            (s/join (core/perceptual-hash (a-hash 16)
                                          (first tu/compr) conj []))))))
 
+(deftest a-hash-size-32-test
+  (testing "a-hash-bits test with a hash of size 32"
+    (is (= 32
+           (count (core/perceptual-hash (a-hash 32)
+                                        (first tu/compr) conj []))))))
+
 (ct/defspec a-hash-size-prop-test 10
   (prop/for-all [im image-generator
-                 hash-size (gen/fmap #(* % %) (gen/choose 2 6))]
+                 hash-size (gen/fmap #(reduce * (repeat % 2)) (gen/choose 2 6))]
                 (= hash-size
                    (count (s/join
                            (core/perceptual-hash (a-hash hash-size)

@@ -27,6 +27,20 @@
   ^long [^long a ^long b]
   (Long/bitCount (bit-xor a b)))
 
+(defn log-2
+  "Calculates the log base 2 of number `n`."
+  [n] (/ (Math/log n) (Math/log 2)))
+
+(defn factor-pairs
+  "Returns the factor pairs of a number `n`."
+  [n]
+  (transduce
+   (comp
+    (take-while #(<= % (Math/sqrt n)))
+    (filter #(zero? (mod n %)))
+    (map (fn [x] [x (quot n x)])))
+   conj [] (rest (range))))
+
 (defonce grayscale (filt/grayscale))
 
 (defn rgb-brightness

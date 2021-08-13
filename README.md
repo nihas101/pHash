@@ -30,10 +30,10 @@ A Clojure library for computing perceptual hashes. Currently aHash, dHash and pH
 (core/eq-images? (ph/p-hash) img-a img-b 5)
 ```
 
-To set the number of bits used for the hash, simply pass the size to the corresponding hashing function. _Note_ that hash sizes should always be a squares (i.e. n*n). By default the hash will always have 64 bits.
+To set the number of bits used for the hash, simply pass the size to the corresponding hashing function. _Note_ that hash sizes should always be a powers of 2 (i.e. size = 2^n). By default the hash will always have 64 bits.
 ```
-;; Calculate the perceptual hash (of 4 bits) of image img using aHash
-(core/perceptual-hash (ah/a-hash 4) img)
+;; Calculate the perceptual hash (of 16 bits) of image img using aHash
+(core/perceptual-hash (ah/a-hash 16) img)
 ```
 
 Images can be loaded from a file-system via [imagez](https://github.com/mikera/imagez) with:

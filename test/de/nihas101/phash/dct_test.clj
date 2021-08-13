@@ -377,7 +377,7 @@
           -120799.42999629723 102899.90353549962 460675.7806016289
           -453754.5307927922 141241.59375047416 -219124.21988855093
           -1067915.7365263023]
-         (discret-cosine-transform-32x32 test-vals)
+         (discrete-cosine-transform-32x32 test-vals)
          epsilon))))
 
 (deftest slow-dct-32x32->8x8-test
@@ -406,7 +406,7 @@
           -5588198.42949544 -1.1579314302565522E7 -641735.7842608448
           -993480.5597432326]
          (reduce-dct-32x32
-          (discret-cosine-transform-32x32 test-vals))
+          (discrete-cosine-transform-32x32 test-vals))
          epsilon))))
 
 (deftest fast-dct-32x32->8x8-test
@@ -434,13 +434,13 @@
           -3.49397917236522E7 -1.001199652525241E7 -2108644.521084308
           -5588198.42949544 -1.1579314302565522E7 -641735.7842608448
           -993480.5597432326]
-         (discret-cosine-transform-reduced-32x32 test-vals)
+         (discrete-cosine-transform-reduced-32x32 test-vals)
          epsilon))))
 
 (defonce ^:private dct-values-gen (gen/vector gen/nat (* 32 32)))
 
-(ct/defspec discret-cosine-transform-oracle-test 20
+(ct/defspec discrete-cosine-transform-oracle-test 20
   (prop/for-all [dct-vals dct-values-gen]
                 (= (reduce-dct-32x32
-                    (discret-cosine-transform-32x32 dct-vals))
-                   (discret-cosine-transform-reduced-32x32 dct-vals))))
+                    (discrete-cosine-transform-32x32 dct-vals))
+                   (discrete-cosine-transform-reduced-32x32 dct-vals))))

@@ -50,7 +50,7 @@
 
 (ct/defspec d-hash-size-prop-test 10
   (prop/for-all [im image-generator
-                 hash-size (gen/fmap #(* % %) (gen/choose 2 6))]
+                 hash-size (gen/fmap #(reduce * (repeat % 2)) (gen/choose 2 6))]
                 (= hash-size
                    (count (s/join
                            (core/perceptual-hash (d-hash hash-size)

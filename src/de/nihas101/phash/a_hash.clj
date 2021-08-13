@@ -23,19 +23,21 @@
   "Creates a hash-function for use with phash.utils/image->hash.
    Optionally also accepts a `hash-size`, which influence
    the size of the hash (in bits).
-   Sizes of n*n where n = 2, ..., 8 are supported.
-   By default a width and height of 8 are used, resulting in a 64-bit hash."
+   Sizes of size = 2^n where n = 2, ..., 6 are supported.
+   By default a width and height of 8 are used,
+   resulting in a 64-bit (2^6) hash."
   ([] (a-hash dim))
   ([^long hash-size]
-   (let [dim (Math/sqrt hash-size)]
+   (let [log (u/log-2 hash-size)
+         [a b] (peek (u/factor-pairs hash-size))]
      (cond
-       (< hash-size 4) (throw
-                        (IllegalArgumentException.
-                         (str hash-size " is too small (min: 4)")))
-       (< 64 hash-size) (throw
-                         (IllegalArgumentException.
-                          (str hash-size " is too large (max: 64)")))
-       (not (zero? (mod dim 1))) (throw
-                                  (IllegalArgumentException.
-                                   (str hash-size " is not a square")))
-       :else (AHash. (long dim) (long dim))))))
+       (< hash-size 4)
+       (throw (IllegalArgumentException.
+               (str hash-size " is too small (min: 4)")))
+       (< 64 hash-size)
+       (throw (IllegalArgumentException.
+               (str hash-size " is too large (max: 64)")))
+       (not= (Math/ceil log) (Math/floor log))
+       (throw (IllegalArgumentException.
+               (str hash-size " is not a power of 2")))
+       :else (AHash. a b)))))

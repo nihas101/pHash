@@ -42,6 +42,12 @@
            (s/join (core/perceptual-hash (p-hash 4)
                                          (first tu/compr) conj []))))))
 
+(deftest p-hash-size-8-test
+  (testing "p-hash-bits test with a hash of size 8"
+    (is (= "11001000"
+           (s/join (core/perceptual-hash (p-hash 8)
+                                         (first tu/compr) conj []))))))
+
 (deftest p-hash-size-16-test
   (testing "p-hash-bits test with a hash of size 16"
     (is (= "1110110000000000"
@@ -50,7 +56,7 @@
 
 (ct/defspec p-hash-size-prop-test 10
   (prop/for-all [im image-generator
-                 hash-size (gen/fmap #(* % %) (gen/choose 2 6))]
+                 hash-size (gen/fmap #(reduce * (repeat % 2)) (gen/choose 2 6))]
                 (= hash-size
                    (count (s/join
                            (core/perceptual-hash (p-hash hash-size)
