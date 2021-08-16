@@ -17,8 +17,8 @@
 (defn- close-to-equal [as bs epsilon]
   (transduce
    (comp
-    (map (fn ^long [[a b]] (if (= a b) 0 (- a b))))
-    (map #(Math/abs %))
+    (map (fn [[a b]] (if (= a b) 0 (- a b))))
+    (map (fn [x] (Math/abs x)))
     (filter (fn [diff] (< epsilon diff))))
    (fn
      ;; Empty seqs are equal
@@ -26,11 +26,10 @@
      ;; If we have not found an offending element we are 'close enough to equal'
      ([result] result)
      ;; We only need to look for one offending element
-     ([_ _]
-      (reduced false)))
+     ([_ _] (reduced false)))
    (mapv vector as bs)))
 
-(defonce ^:private epsilon 0.000001)
+(defonce ^:private epsilon 0.00001)
 
 (deftest slow-dct-32x32-test
   (testing "slow dct 32x32 test"

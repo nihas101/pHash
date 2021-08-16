@@ -106,12 +106,12 @@
 
 (defonce ^:private idx-lin-gen
   (gen/fmap
-   (fn [[a b]] [a (inc b)])
+   (fn [[^long a ^long b]] [a (inc b)])
    (gen/tuple gen/nat gen/nat gen/nat)))
 
 (ct/defspec idx-lin->idx-2d-prop-test 100
-  (prop/for-all [[x width] idx-lin-gen]
-                (let [[xx yy] (idx-lin->idx-2d x width)]
+  (prop/for-all [[^long x ^long width] idx-lin-gen]
+                (let [[^long xx ^long yy] (idx-lin->idx-2d x width)]
                   (is (and
                        (<= 0 xx width)
                        (<= 0 yy)
@@ -130,9 +130,9 @@
     (is (= 10 (idx-2d->idx-lin 2 2 4)))))
 
 (defonce ^:private idx-2d-gen
-  (gen/bind (gen/fmap (fn [[b c]] [b (inc c)])
+  (gen/bind (gen/fmap (fn [[^long b ^long c]] [b (inc c)])
                       (gen/tuple gen/nat gen/nat))
-            (fn [[b c]]
+            (fn [[^long b ^long c]]
               ;; a MUST be smaller than c,
               ;; otherwise this is not a valid 2d index
               (gen/tuple (gen/choose 0 (dec c))
@@ -140,7 +140,7 @@
                          (gen/return c)))))
 
 (ct/defspec idx-2d->idx-lin-prop-test 100
-  (prop/for-all [[x y width] idx-2d-gen]
+  (prop/for-all [[^long x ^long y ^long width] idx-2d-gen]
                 (let [xx (idx-2d->idx-lin x y width)]
                   (is
                    (and (<= 0 xx)

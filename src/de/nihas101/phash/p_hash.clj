@@ -17,9 +17,9 @@
   (image->hash [this image] (u/image->hash this image u/bit->long [0 1]))
   (image->hash [_ image reducer init]
     (let [dct (dct-32x32 image m n)
-          avg-dct (/ (reduce + dct) (count dct))]
+          avg-dct (quot (reduce + dct) (count dct))]
       (transduce
-       (map (fn [dct-val] (if (< dct-val avg-dct) 1 0)))
+       (map (fn [^long dct-val] (if (< dct-val ^long avg-dct) 1 0)))
        reducer init
        dct))))
 
