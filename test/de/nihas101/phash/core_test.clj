@@ -46,11 +46,11 @@
 
 (deftest perceptual-p-hash-test
   (testing "p-hash test"
-    (is (= 72060892623284135 (perceptual-hash p-hash-fn (first tu/compr))))))
+    (is (= 2251877124280855 (perceptual-hash p-hash-fn (first tu/compr))))))
 
 (deftest perceptual-p-hash-bits-test
   (testing "p-hash-bits test"
-    (is (= "1110010111100100010000001100000000000000110000000000000010000000"
+    (is (= "1110100001001000010010000000000001001000000000000001000000000000"
            (s/join (perceptual-hash p-hash-fn (first tu/compr) conj []))))))
 
 ;; aHash
@@ -249,9 +249,9 @@
   (testing "image-distance p-hash compr blur test"
     (mapv
      (fn [idx compressed blurred]
-       (is (< (image-distance p-hash-fn compressed blurred) 5)
+       (is (< (image-distance p-hash-fn compressed blurred) 12)
            (str "Image with id " idx
-                " has a hamming distance larger than 5")))
+                " has a hamming distance larger than 12")))
      (range)
      tu/compr
      tu/blur)))
@@ -260,9 +260,9 @@
   (testing "image-distance p-hash compr misc test"
     (mapv
      (fn [idx compressed misclns]
-       (is (< (image-distance p-hash-fn compressed misclns) 2)
+       (is (< (image-distance p-hash-fn compressed misclns) 3)
            (str "Image with id " idx
-                " has a hamming distance larger than 2")))
+                " has a hamming distance larger than 3")))
      (range)
      tu/compr
      tu/misc)))
@@ -271,9 +271,9 @@
   (testing "image-distance p-hash blur misc test"
     (mapv
      (fn [idx blurred misclns]
-       (is (< (image-distance p-hash-fn blurred misclns) 5)
+       (is (< (image-distance p-hash-fn blurred misclns) 11)
            (str "Image with id " idx
-                " has a hamming distance larger than 5")))
+                " has a hamming distance larger than 11")))
      (range)
      tu/blur
      tu/misc)))

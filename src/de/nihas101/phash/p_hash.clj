@@ -6,7 +6,7 @@
 
 (defn- dct-32x32
   "Computes the DCT of a 32x32 `image`,
-   only keeping the lowest-frequency `width` x `height` values."
+   only keeping the lowest-frequency `m` x `n` values."
   [image m n]
   (-> image
       u/get-pixels

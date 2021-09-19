@@ -23,11 +23,11 @@
    (map
     (fn [[^long x ^long y]]
       (* ^long (get values (u/idx-2d->idx-lin x y 32))
-         ^double (Math/cos (quot (* (inc (* 2 x)) i Math/PI) 64))
-         ^double (Math/cos (quot (* (inc (* 2 y)) j Math/PI) 64)))))
+         ^double (Math/cos (/ (* (inc (* 2 x)) i Math/PI) 64))
+         ^double (Math/cos (/ (* (inc (* 2 y)) j Math/PI) 64)))))
    + dct-indexes))
 
-(defonce ^:private scale-factor (double (/ 1 (Math/sqrt 64))))
+(defonce ^:private scale-factor (double (/ 1 (Math/sqrt (* 32 32)))))
 
 (defn discrete-cosine-transform-32x32
   "Calculates the DCT of a 32x32 matrix, according to:
@@ -40,24 +40,6 @@
               (coefficient j)
               (dct-sum-32x32 values i j)))
          dct-indexes)))
-
-;; This is the slow version of the algorithm:
-;; First calculates all 32x32 terms before discarding most of them again
-
-(defn reduce-dct-32x32
-  "Reduces a DCT of a 32x32 matrix to the matrix of the lowest
-   `matrix-size` x `matrix-size` frequencies."
-  (^longs [values] (reduce-dct-32x32 values 8))
-  (^longs [values matrix-size]
-   (reduce-dct-32x32 values matrix-size matrix-size))
-  (^longs [values m n]
-   (mapv (fn [[x y]] (get values (u/idx-2d->idx-lin x y 32)))
-         (for [x (range m)
-               y (range n)]
-           [x y]))))
-
-;; This is the fast version of the algorithm:
-;; Only calculates the necessary terms
 
 (defn discrete-cosine-transform-reduced-32x32
   "Calculates a reduced (`matrix-size` x `matrix-size`) DCT of a 32x32 matrix."

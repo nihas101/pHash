@@ -10,14 +10,14 @@
    [clojure.test.check.clojure-test :as ct]
    [clojure.test.check.properties :as prop]))
 
-; Creates image between 5x5 and 20x20 (inclusive)
+; Creates images between 5x5 and 20x20 (inclusive)
 (defonce ^:private image-generator (tu/image-gen 5 20))
 
 (defonce ^:private p-hash-fn (p-hash))
 
 (deftest image->hash-p-hash-test
   (testing "u/image->hash using p-hash"
-    (is (= 72060892623284135
+    (is (= 2251877124280855
            (u/image->hash p-hash-fn (-> tu/compr
                                         first
                                         (u/resize-image ,,, (:width p-hash-fn)
@@ -44,13 +44,13 @@
 
 (deftest p-hash-size-8-test
   (testing "p-hash-bits test with a hash of size 8"
-    (is (= "11001000"
+    (is (= "10100000"
            (s/join (core/perceptual-hash (p-hash 8)
                                          (first tu/compr) conj []))))))
 
 (deftest p-hash-size-16-test
   (testing "p-hash-bits test with a hash of size 16"
-    (is (= "1110110000000000"
+    (is (= "1110000001000000"
            (s/join (core/perceptual-hash (p-hash 16)
                                          (first tu/compr) conj []))))))
 
@@ -66,6 +66,12 @@
   (prop/for-all [im image-generator]
                 (= (core/perceptual-hash p-hash-fn im)
                    (core/perceptual-hash p-hash-fn im))))
+
+(deftest p-hash-diff-images-test
+  (testing "p-hash of different images should be different enough"
+    (let [hash (p-hash 32)]
+      (doseq [[a b] (mapv vector tu/compr (rest tu/compr))]
+        (is (not (core/eq-images? hash a b 1)))))))
 
 (ct/defspec noise-image-p-hash-prop-test 5
   (prop/for-all [im image-generator]

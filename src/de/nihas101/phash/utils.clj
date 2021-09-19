@@ -71,10 +71,28 @@
    conj
    (im/get-pixels image)))
 
+(defn matrix-slice
+  "Slices the upper left of a matrix of size `m` x `n`."
+  (^longs [values] (matrix-slice values 8))
+  (^longs [values matrix-size]
+   (matrix-slice values 32 matrix-size matrix-size))
+  (^longs [values row-size m n]
+   (mapv (fn [[x y]] (get values (idx-2d->idx-lin x y row-size)))
+         (for [x (range m)
+               y (range n)]
+           [x y])))
+  (^longs [values row-size m n om on]
+   (mapv (fn [[x y]] (get values (idx-2d->idx-lin x y row-size)))
+         (for [x (range m)
+               y (range n)]
+           [(+ om x) (+ on y)]))))
+
 (def new-image im/new-image)
 (def load-image im/load-image)
 (def resize-image im/resize)
 (def get-pixels im/get-pixels)
+(def image-height im/height)
+(def image-width im/width)
 
 (defprotocol HashFn
   "A hash function used to calculate a hash from an image.
