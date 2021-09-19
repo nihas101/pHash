@@ -1,6 +1,6 @@
 # pHash [![Clojure CI](https://github.com/nihas101/pHash/actions/workflows/clojure.yml/badge.svg)](https://github.com/nihas101/pHash/actions/workflows/clojure.yml)
 
-A Clojure library for computing perceptual hashes. Currently aHash, dHash and pHash are supported.
+A Clojure library for computing perceptual hashes. Currently aHash, dHash, wHash and pHash are supported.
 
 # Requirements
 **Java 1.8** is required to run this program. **Leiningen** is required for building and deploying the library.
