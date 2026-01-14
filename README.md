@@ -1,3 +1,5 @@
+Moved to [codeberg.org](https://codeberg.org/nihas101/pHash)
+
 # pHash [![Clojure CI](https://github.com/nihas101/pHash/actions/workflows/clojure.yml/badge.svg)](https://github.com/nihas101/pHash/actions/workflows/clojure.yml)
 
 A Clojure library for computing perceptual hashes. Currently aHash, dHash, wHash and pHash are supported.
